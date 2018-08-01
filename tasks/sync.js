@@ -25,6 +25,7 @@ async function sync() {
     packageJsons.map(async ({ basename, filepath, file }) => {
       file.version = lerna.version;
       file.repository = `${REPO_URL_BASE}/${basename}`;
+      file.bugs = 'https://github.com/carbon-design-system/toolkit/issues';
       file.license = 'Apache-2.0';
       file.publishConfig = {
         access: 'public',
