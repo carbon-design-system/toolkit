@@ -1,0 +1,11 @@
+build
+lib
+es
+umd
+umd.*
+*.umd
+*.umd.*
+package.json
+__testfixtures__
+css
+scss
