@@ -1,0 +1,15 @@
+{
+  "name": "@carbon/cli-tools",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-tools",
+  "bugs": "https://github.com/carbon-design-system/toolkit/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "cross-spawn": "^6.0.5",
+    "log4js": "^3.0.2"
+  }
+}
