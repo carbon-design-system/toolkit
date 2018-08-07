@@ -7,5 +7,10 @@
   "bugs": "https://github.com/carbon-design-system/toolkit/issues",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@carbon/cli-tools": "0.0.3",
+    "fs-extra": "^7.0.0",
+    "npm-which": "^3.0.1"
   }
 }
