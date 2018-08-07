@@ -30,6 +30,11 @@ function spawnAsync(command, args, options) {
       }
       resolve(stdout);
     });
+
+    child.on('error', error => {
+      reject(error);
+      return;
+    });
   });
 }
 
