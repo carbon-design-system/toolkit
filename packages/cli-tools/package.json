@@ -10,6 +10,6 @@
   },
   "dependencies": {
     "cross-spawn": "^6.0.5",
-    "log4js": "^3.0.2"
+    "log4js": "^3.0.4"
   }
 }
