@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { spawn } = require('@carbon/cli-tools');
 const createInstaller = require('./createInstaller');
+const { linkDependency, unlinkDependency } = require('./link');
 
 const supportedClients = new Set(['npm', 'yarn']);
 
@@ -62,6 +63,16 @@ function createClient(npmClient, cwd) {
       saveDevFlag
     ),
     linkDependencies: createInstaller(npmClient, cwd, 'link', null),
+    linkDependency: (cwd, options = {}) =>
+      linkDependency(npmClient, {
+        cwd,
+        ...options,
+      }),
+    unlinkDependency: (cwd, options = {}) =>
+      unlinkDependency(npmClient, {
+        cwd,
+        ...options,
+      }),
 
     // CLI-relevant values
     installCommand,
