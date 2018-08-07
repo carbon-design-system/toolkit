@@ -9,10 +9,15 @@ function addCommandToProgram(program, command, CLI_ENV) {
   for (let option of options) {
     const { flags, description, defaults, development } = option;
 
-    if (development && CLI_ENV === 'development') {
-      const args = [flags, `${description} [DEV ONLY]`, defaults].filter(
-        Boolean
-      );
+    if (development) {
+      if (CLI_ENV === 'development') {
+        const args = [flags, `${description} [DEV ONLY]`, defaults].filter(
+          Boolean
+        );
+        cliCommand.option(...args);
+      }
+    } else {
+      const args = [flags, description, defaults].filter(Boolean);
       cliCommand.option(...args);
     }
   }
