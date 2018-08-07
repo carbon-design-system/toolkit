@@ -1,0 +1,19 @@
+{
+  "name": "@carbon/toolkit",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "bin": {
+    "toolkit": "bin/index.js"
+  },
+  "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/toolkit",
+  "bugs": "https://github.com/carbon-design-system/toolkit/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@carbon/cli-runtime": "0.0.0",
+    "@carbon/cli-tools": "0.0.0",
+    "chalk": "^2.4.1",
+    "commander": "^2.17.0"
+  }
+}
