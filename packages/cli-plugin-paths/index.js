@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const url = require('url');
 
-// Inspired by Facebook's Create Reac App:
+// Inspired by Facebook's Create React App:
 // https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/config/paths.js
 module.exports = ({ api, env, options }) => {
   api.extend('project.paths', () => {
