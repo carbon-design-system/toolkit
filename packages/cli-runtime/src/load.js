@@ -38,6 +38,8 @@ async function load({
   const store = new Store();
   const api = new PluginAPI({ store });
 
+  await applyPlugins(defaultPlugins, api, env);
+
   const { error: loaderError, isEmpty, config: rawConfig } = await loader(
     name,
     cwd
@@ -50,9 +52,10 @@ async function load({
 
   if (isEmpty) {
     return {
+      api,
+      env,
       name,
       store,
-      env,
     };
   }
 
@@ -70,9 +73,7 @@ async function load({
     };
   }
 
-  const plugins = defaultPlugins.concat(config.plugins);
-
-  await applyPlugins(plugins, api, env);
+  await applyPlugins(config.plugins, api, env);
 
   return {
     api,
