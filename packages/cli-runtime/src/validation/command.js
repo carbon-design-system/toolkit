@@ -12,6 +12,7 @@ const schema = Joi.object()
         flags: Joi.string().required(),
         description: Joi.string().required(),
         defaults: Joi.string(),
+        development: Joi.boolean(),
       })
     ),
     action: Joi.func().required(),

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@carbon/cli-config": "0.0.3",
+    "@carbon/cli-plugin-create": "0.0.3",
     "@carbon/cli-tools": "0.0.3",
     "@carbon/npm": "0.0.3",
     "cosmiconfig": "^5.0.5",

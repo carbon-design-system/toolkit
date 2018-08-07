@@ -11,6 +11,14 @@ const { validate: defaultValidate } = require('./validation/config');
 const PluginAPI = require('./PluginAPI');
 const Store = require('./Store');
 
+const defaultPlugins = [
+  {
+    name: '@carbon/cli-plugin-create',
+    plugin: require('@carbon/cli-plugin-create'),
+    options: {},
+  },
+];
+
 async function load({
   cwd = process.cwd(),
   name = 'toolkit',
@@ -25,6 +33,7 @@ async function load({
   const env = {
     cwd,
     npmClient: await getClient(cwd),
+    CLI_ENV: process.env.TOOLKIT_CLI_ENV || 'production',
   };
   const store = new Store();
   const api = new PluginAPI({ store });
@@ -61,7 +70,9 @@ async function load({
     };
   }
 
-  await applyPlugins(config.plugins, api, env);
+  const plugins = defaultPlugins.concat(config.plugins);
+
+  await applyPlugins(plugins, api, env);
 
   return {
     api,
