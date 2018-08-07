@@ -10,60 +10,6 @@ const { loader: defaultLoader } = require('./loader');
 const { validate: defaultValidate } = require('./validation/config');
 const Store = require('./Store');
 
-// async function load({
-// cwd = process.cwd(),
-// name = 'toolkit',
-// getClient = defaultGetClient,
-// loader = defaultLoader,
-// loadConfig = defaultLoadConfig,
-// resolve = defaultResolve,
-// validate = defaultValidate,
-// } = {}) {
-// logger.trace('Loading runtime configuration');
-
-// const env = {
-// cwd,
-// npmClient: await getClient(cwd),
-// };
-// const store = new Store();
-
-// const { error: loaderError, isEmpty, config: rawConfig } = await loader(name);
-// if (loaderError) {
-// return {
-// error: loaderError,
-// };
-// }
-
-// if (isEmpty) {
-// return {
-// name,
-// store,
-// env,
-// };
-// }
-
-// const { error: validationError, value } = validate(rawConfig);
-// if (validationError) {
-// return {
-// error: validationError,
-// };
-// }
-
-// const { error: loadConfigError, config } = await loadConfig(value, resolve);
-// if (loadConfigError) {
-// return {
-// error: loadConfigError,
-// };
-// }
-
-// return {
-// config,
-// name,
-// store,
-// env,
-// };
-// }
-
 async function load({
   cwd = process.cwd(),
   name = 'toolkit',
