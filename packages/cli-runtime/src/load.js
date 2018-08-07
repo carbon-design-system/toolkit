@@ -8,6 +8,7 @@ const { getClient: defaultGetClient } = require('@carbon/npm');
 const { logger } = require('./logger');
 const { loader: defaultLoader } = require('./loader');
 const { validate: defaultValidate } = require('./validation/config');
+const PluginAPI = require('./PluginAPI');
 const Store = require('./Store');
 
 async function load({
@@ -26,6 +27,7 @@ async function load({
     npmClient: await getClient(cwd),
   };
   const store = new Store();
+  const api = new PluginAPI({ store });
 
   const { error: loaderError, isEmpty, config: rawConfig } = await loader(
     name,
@@ -59,11 +61,14 @@ async function load({
     };
   }
 
+  await applyPlugins(config.plugins, api, env);
+
   return {
+    api,
+    config,
+    env,
     name,
     store,
-    env,
-    config,
   };
 }
 
@@ -73,6 +78,17 @@ function normalize(config) {
     plugins: [],
     ...config,
   };
+}
+
+async function applyPlugins(plugins, api, env) {
+  for (const { name, plugin, options } of plugins) {
+    logger.trace(`Applying plugin: ${name}`);
+    await plugin({
+      api,
+      options,
+      env,
+    });
+  }
 }
 
 module.exports = load;
