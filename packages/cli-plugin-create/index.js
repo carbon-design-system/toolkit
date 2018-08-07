@@ -1,16 +1,22 @@
 'use strict';
 
-const { clearConsole } = require('@carbon/cli-tools');
+const { clearConsole, spawn } = require('@carbon/cli-tools');
 const { getClient, createClient } = require('@carbon/npm');
 const { createLogger } = require('@carbon/cli-tools');
 const fs = require('fs-extra');
+const inquirer = require('inquirer');
 const npmWhich = require('npm-which')(__dirname);
 const path = require('path');
 const packageJson = require('./package.json');
+const util = require('util');
+
+const which = util.promisify(npmWhich);
 
 const logger = createLogger(packageJson.name);
 
 module.exports = async ({ api, env }) => {
+  const { spinner } = env;
+
   api.addCommand({
     name: 'create <project-name>',
     description: 'create a new project',
@@ -55,7 +61,9 @@ module.exports = async ({ api, env }) => {
         name,
         private: true,
         license: 'MIT',
-        scripts: {},
+        scripts: {
+          toolkit: 'toolkit',
+        },
         dependencies: {},
         toolkit: {
           plugins: [],
@@ -71,6 +79,69 @@ module.exports = async ({ api, env }) => {
         clearConsole();
       }
 
+      console.log('Hi there! 👋');
+      console.log('We have a couple of questions to help get you started');
+      console.log();
+
+      const answers = await inquirer.prompt([
+        {
+          type: 'checkbox',
+          name: 'plugins',
+          message: 'What plugins would you like to add to your project?',
+          choices: [
+            {
+              name: 'Environment plugin [@carbon/cli-plugin-env]',
+              value: '@carbon/cli-plugin-env',
+              checked: true,
+            },
+            {
+              name: 'Paths plugin [@carbon/cli-plugin-paths]',
+              value: '@carbon/cli-plugin-paths',
+            },
+          ],
+        },
+      ]);
+
+      if (answers.plugins.length === 0) {
+        console.log(
+          'Sounds good! If you ever are looking for plugins, feel free to ' +
+            'add ones that you find by running:'
+        );
+        console.log();
+        console.log('  yarn toolkit add <plugin-name>');
+        console.log();
+        console.log('You can now view your project in:', name);
+        console.log();
+        console.log('We suggest that you begin by typing:');
+        console.log();
+        console.log(`  cd ${name}`);
+        console.log();
+        console.log('Happy hacking!');
+        return;
+      }
+
+      const toolkit = await which('toolkit', { cwd: root });
+
+      spinner.text = 'Adding plugins...';
+      spinner.start();
+      spinner.info();
+
+      for (const plugin of answers.plugins) {
+        spinner.text = `Adding plugin ${plugin}`;
+        spinner.start();
+
+        const args = ['add', plugin, link && '--link'].filter(Boolean);
+        await spawn(toolkit, args, {
+          cwd: root,
+          stdio: 'inherit',
+        });
+
+        spinner.succeed();
+      }
+
+      spinner.stop();
+
+      console.log();
       console.log(`Success! Created ${name} at ${root}`);
       console.log('Inside that directory, you will find your new project.');
       console.log();

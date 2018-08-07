@@ -5,6 +5,7 @@ const {
   resolve: defaultResolve,
 } = require('@carbon/cli-config');
 const { getClient: defaultGetClient } = require('@carbon/npm');
+const ora = require('ora');
 const { logger } = require('./logger');
 const { loader: defaultLoader } = require('./loader');
 const { validate: defaultValidate } = require('./validation/config');
@@ -13,11 +14,25 @@ const Store = require('./Store');
 
 const defaultPlugins = [
   {
+    name: '@carbon/cli-plugin-add',
+    plugin: require('@carbon/cli-plugin-add'),
+    options: {},
+  },
+  {
     name: '@carbon/cli-plugin-create',
     plugin: require('@carbon/cli-plugin-create'),
     options: {},
   },
 ];
+
+const noopSpinner = {
+  start() {},
+  stop() {},
+  succeed() {},
+  fail() {},
+  warn() {},
+  info() {},
+};
 
 async function load({
   cwd = process.cwd(),
@@ -30,10 +45,12 @@ async function load({
 } = {}) {
   logger.trace('Loading runtime configuration');
 
+  const { TOOLKIT_CLI_ENV: CLI_ENV = 'production' } = process.env;
   const env = {
+    CLI_ENV,
     cwd,
     npmClient: await getClient(cwd),
-    CLI_ENV: process.env.TOOLKIT_CLI_ENV || 'production',
+    spinner: CLI_ENV === 'production' ? ora() : noopSpinner,
   };
   const store = new Store();
   const api = new PluginAPI({ store });

@@ -10,13 +10,15 @@
   },
   "dependencies": {
     "@carbon/cli-config": "0.0.4",
+    "@carbon/cli-plugin-add": "0.0.4",
     "@carbon/cli-plugin-create": "0.0.4",
     "@carbon/cli-tools": "0.0.4",
     "@carbon/npm": "0.0.4",
     "cosmiconfig": "^5.0.5",
     "joi": "^13.4.0",
     "lodash.get": "^4.4.2",
-    "lodash.set": "^4.3.2"
+    "lodash.set": "^4.3.2",
+    "ora": "^3.0.0"
   },
   "devDependencies": {
     "fs-extra": "^7.0.0",
