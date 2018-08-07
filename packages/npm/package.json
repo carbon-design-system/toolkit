@@ -9,6 +9,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/cli-tools": "0.0.2"
+    "@carbon/cli-tools": "0.0.2",
+    "fs-extra": "^7.0.0"
   }
 }
