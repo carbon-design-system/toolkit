@@ -8,8 +8,12 @@ const ROOT_DIR = path.resolve(__dirname, '../');
 const PACKAGES_DIR = path.join(ROOT_DIR, 'packages');
 
 async function unlink() {
-  const { npmClient } = await getClient(ROOT_DIR);
-  const { unlinkDependency } = await createClient(npmClient, ROOT_DIR);
+  const npmClient = await getClient(ROOT_DIR);
+  const { error, unlinkDependency } = await createClient(npmClient, ROOT_DIR);
+  if (error) {
+    throw error;
+  }
+
   const packages = (await fs.readdir(PACKAGES_DIR)).map(name =>
     path.join(PACKAGES_DIR, name)
   );

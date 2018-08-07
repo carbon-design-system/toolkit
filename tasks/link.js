@@ -8,8 +8,12 @@ const ROOT_DIR = path.resolve(__dirname, '../');
 const PACKAGES_DIR = path.join(ROOT_DIR, 'packages');
 
 async function link() {
-  const { npmClient } = await getClient(ROOT_DIR);
-  const { linkDependency } = await createClient(npmClient, ROOT_DIR);
+  const npmClient = await getClient(ROOT_DIR);
+  const { error, linkDependency } = await createClient(npmClient, ROOT_DIR);
+  if (error) {
+    throw error;
+  }
+
   const packages = (await fs.readdir(PACKAGES_DIR)).map(name =>
     path.join(PACKAGES_DIR, name)
   );
