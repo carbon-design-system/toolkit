@@ -17,7 +17,7 @@ async function loadConfig(rawConfig, resolve = defaultResolve) {
     };
   }
 
-  const { error: loadPluginsError, plugins } = await loadPlugin(
+  const { error: loadPluginsError, plugins } = await loadPlugins(
     config.plugins,
     resolve
   );
@@ -28,9 +28,13 @@ async function loadConfig(rawConfig, resolve = defaultResolve) {
     };
   }
 
-  return presets
-    .reduce((plugins, preset) => plugins.concat(preset.plugins), [])
-    .concat(plugins);
+  return {
+    config: {
+      plugins: presets
+        .reduce((acc, preset) => acc.concat(preset.plugins), [])
+        .concat(plugins),
+    },
+  };
 }
 
 function normalize(config) {
