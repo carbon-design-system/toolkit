@@ -72,9 +72,6 @@ module.exports = async ({ api, env }) => {
 
       await writePackageJson(packageJson);
 
-      const installer = linkCli ? linkDependencies : installDependencies;
-      await installer(['@carbon/toolkit']);
-
       if (env.CLI_ENV === 'production') {
         clearConsole();
       }
@@ -102,10 +99,13 @@ module.exports = async ({ api, env }) => {
         },
       ]);
 
+      const installer = linkCli ? linkDependencies : installDependencies;
+      await installer(['@carbon/toolkit']);
+
       if (answers.plugins.length === 0) {
         console.log(
-          'Sounds good! If you ever are looking for plugins, feel free to ' +
-            'add ones that you find by running:'
+          'If you ever are looking for plugins, feel free to add ones that ' +
+            'you find by running:'
         );
         console.log();
         console.log('  yarn toolkit add <plugin-name>');
