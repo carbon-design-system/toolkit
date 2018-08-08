@@ -43,7 +43,9 @@ async function add(api, env, descriptors, cmd) {
     const installer = cmd.link ? linkDependencies : installDependencies;
     const dependency = cmd.link ? name : `${name}@${version}`;
 
-    await installer([dependency]);
+    await installer([dependency], {
+      stdio: 'ignore',
+    });
 
     const projectPackageJson = await readPackageJson();
     await writePackageJson({
