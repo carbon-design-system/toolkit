@@ -40,6 +40,7 @@ async function add(api, env, descriptors, cmd) {
 
   for (const { name, version } of packages) {
     spinner.text = `Adding plugin ${name}`;
+    spinner.start();
 
     invariant(
       !config.plugins.find(plugin => plugin.name === name),
