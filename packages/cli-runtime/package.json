@@ -14,7 +14,6 @@
     "@carbon/cli-plugin-create": "0.0.5",
     "@carbon/cli-tools": "0.0.5",
     "@carbon/npm": "0.0.5",
-    "cosmiconfig": "^5.0.5",
     "joi": "^13.4.0",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",

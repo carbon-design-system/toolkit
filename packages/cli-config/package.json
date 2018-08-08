@@ -9,6 +9,8 @@
     "access": "public"
   },
   "dependencies": {
-    "invariant": "^2.2.4"
+    "cosmiconfig": "^5.0.5",
+    "invariant": "^2.2.4",
+    "joi": "^13.5.2"
   }
 }

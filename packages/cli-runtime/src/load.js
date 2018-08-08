@@ -7,8 +7,6 @@ const {
 const { getClient: defaultGetClient } = require('@carbon/npm');
 const ora = require('ora');
 const { logger } = require('./logger');
-const { loader: defaultLoader } = require('./loader');
-const { validate: defaultValidate } = require('./validation/config');
 const PluginAPI = require('./PluginAPI');
 const Store = require('./Store');
 
@@ -38,32 +36,33 @@ async function load({
   cwd = process.cwd(),
   name = 'toolkit',
   getClient = defaultGetClient,
-  loader = defaultLoader,
   loadConfig = defaultLoadConfig,
+  loader,
   resolve = defaultResolve,
-  validate = defaultValidate,
 } = {}) {
   logger.trace('Loading runtime configuration');
 
   const { TOOLKIT_CLI_ENV: CLI_ENV = 'production' } = process.env;
+  const store = new Store();
+  const api = new PluginAPI({ store });
   const env = {
     CLI_ENV,
     cwd,
     npmClient: await getClient(cwd),
     spinner: CLI_ENV === 'production' ? ora() : noopSpinner,
   };
-  const store = new Store();
-  const api = new PluginAPI({ store });
 
   await applyPlugins(defaultPlugins, api, env);
 
-  const { error: loaderError, isEmpty, config: rawConfig } = await loader(
+  const { error: loadConfigError, config, isEmpty } = await loadConfig({
+    cwd,
+    loader,
     name,
-    cwd
-  );
-  if (loaderError) {
+    resolve,
+  });
+  if (loadConfigError) {
     return {
-      error: loaderError,
+      error: loadConfigError,
     };
   }
 
@@ -73,20 +72,6 @@ async function load({
       env,
       name,
       store,
-    };
-  }
-
-  const { error: validationError, value } = validate(normalize(rawConfig));
-  if (validationError) {
-    return {
-      error: validationError,
-    };
-  }
-
-  const { error: loadConfigError, config } = await loadConfig(value, resolve);
-  if (loadConfigError) {
-    return {
-      error: loadConfigError,
     };
   }
 
