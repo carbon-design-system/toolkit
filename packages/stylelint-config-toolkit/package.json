@@ -1,0 +1,20 @@
+{
+  "name": "stylelint-config-toolkit",
+  "version": "0.0.7",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/stylelint-config-toolkit",
+  "bugs": "https://github.com/carbon-design-system/toolkit/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "stylelint": "^9.1.1"
+  },
+  "devDependencies": {
+    "stylelint": "^9.1.1"
+  },
+  "dependencies": {
+    "stylelint-scss": "^2.4.0"
+  }
+}
