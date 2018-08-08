@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`resourceHints #prefetchHints should print out link tags 1`] = `
+Array [
+  "<link rel=\\"prefetch\\" href=\\"/static/js/Foo.d32c4417.chunk.js\\" as=\\"script\\">",
+]
+`;
+
+exports[`resourceHints #preloadHints should print out link tags 1`] = `
+Array [
+  "<link rel=\\"preload\\" href=\\"static/css/main.1c0d3fed.css\\" as=\\"style\\">",
+  "<link rel=\\"preload\\" href=\\"static/js/main.85d0f27c.js\\" as=\\"script\\">",
+  "<link rel=\\"preload\\" href=\\"static/js/vendor.7f3d1409.js\\" as=\\"script\\">",
+]
+`;

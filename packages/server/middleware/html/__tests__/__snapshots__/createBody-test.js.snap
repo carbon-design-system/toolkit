@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createBody should generate the body for the html response 1`] = `"<body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\\"root\\"></div><script crossorigin=\\"anonymous\\" src=\\"vendor.js\\"></script><script crossorigin=\\"anonymous\\" src=\\"main.js\\"></script></body>"`;
