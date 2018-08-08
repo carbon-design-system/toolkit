@@ -1,26 +1,12 @@
 'use strict';
 
-const { createLogger } = require('@carbon/cli-tools');
-const packageJson = require('../package.json');
-
-const logger = createLogger(packageJson.name);
-
-function sleep(ms) {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
-}
+const add = require('./add');
 
 module.exports = ({ api, env }) => {
   api.addCommand({
-    name: 'add <plugin-name>',
-    description: 'add a plugin to your project',
+    name: 'add [plugins...]',
+    description: 'add plugins to your project',
     options: [
-      {
-        flags: '--pluginOptions <options>',
-        description:
-          'Provide options to pass to the plugin when adding it to your project',
-      },
       {
         flags: '--link',
         description: 'link a local plugin to the project',
@@ -28,12 +14,12 @@ module.exports = ({ api, env }) => {
       },
       {
         flags: '--link-cli',
-        description: 'link for local development',
+        description: 'link cli for local development',
         development: true,
       },
     ],
-    async action(plugin, cmd) {
-      await sleep(5000);
+    action(plugins, cmd) {
+      return add(api, env, plugins, cmd);
     },
   });
 };

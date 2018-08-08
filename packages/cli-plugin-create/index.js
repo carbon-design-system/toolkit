@@ -122,21 +122,15 @@ module.exports = async ({ api, env }) => {
 
       const toolkit = await which('toolkit', { cwd: root });
 
-      spinner.text = 'Adding plugins...';
       spinner.start();
-      spinner.info();
+      spinner.info('Adding plugins');
 
       for (const plugin of answers.plugins) {
-        spinner.text = `Adding plugin ${plugin}`;
-        spinner.start();
-
         const args = ['add', plugin, link && '--link'].filter(Boolean);
         await spawn(toolkit, args, {
           cwd: root,
           stdio: 'inherit',
         });
-
-        spinner.succeed();
       }
 
       spinner.stop();
@@ -148,6 +142,13 @@ module.exports = async ({ api, env }) => {
       console.log('We suggest that you begin by typing:');
       console.log();
       console.log(`  cd ${name}`);
+      console.log(`  yarn toolkit --help`);
+      console.log();
+      console.log(
+        'This should help give you a good idea of what is available. Also, ' +
+          'make sure to check out your `package.json` scripts to see what ' +
+          'has been added.'
+      );
       console.log();
       console.log('Happy hacking!');
     },

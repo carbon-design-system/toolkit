@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = ({ api }) => {
-  api.extends('env', () => {
+  api.extend('env', () => {
     const { NODE_ENV = 'development' } = process.env;
     // Grab NODE_ENV and *_UI_* environment variables and prepare them to be
     // injected into the application via DefinePlugin in Webpack configuration.

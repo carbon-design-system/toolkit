@@ -9,6 +9,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/cli-tools": "0.0.5"
+    "@carbon/cli-tools": "0.0.5",
+    "@carbon/npm": "0.0.5",
+    "fs-extra": "^7.0.0",
+    "invariant": "^2.2.4",
+    "npm-which": "^3.0.1"
   }
 }
