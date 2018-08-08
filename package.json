@@ -20,8 +20,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.51",
-    "@babel/preset-flow": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-beta.56",
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
     "babel-core": "^7.0.0-0",
