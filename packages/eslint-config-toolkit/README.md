@@ -1,6 +1,6 @@
 # `eslint-config-toolkit`
 
-> Provides a base set of ESLint rules and plugins to be shared by toolkit Design System projects.
+> ESLint config for `@carbon/toolkit` projects
 
 ## Usage
 
