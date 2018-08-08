@@ -8,7 +8,6 @@ const express = require.requireActual('express');
 const freeport = require.requireActual('freeport');
 
 describe('listen', () => {
-  let path;
   // eslint-disable-next-line no-unused-vars
   let config;
   let logger;
@@ -39,7 +38,6 @@ describe('listen', () => {
           PORT,
         });
 
-        path = require('path');
         config = require('config');
         logger = require('../logger');
         listen = require('../listen');

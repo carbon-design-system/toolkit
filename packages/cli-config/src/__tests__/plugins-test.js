@@ -9,7 +9,6 @@ describe('plugins', () => {
   let loadPlugins;
   let mockModule;
   let mockResolve;
-  let mockOptions;
 
   beforeEach(() => {
     loadPlugin = require('../plugins').loadPlugin;
@@ -22,9 +21,6 @@ describe('plugins', () => {
       }
       return { error: new Error('error') };
     });
-    mockOptions = {
-      foo: 'bar',
-    };
   });
 
   describe('loadPlugin', () => {

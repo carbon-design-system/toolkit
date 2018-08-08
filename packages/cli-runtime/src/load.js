@@ -86,14 +86,6 @@ async function load({
   };
 }
 
-function normalize(config) {
-  return {
-    presets: [],
-    plugins: [],
-    ...config,
-  };
-}
-
 async function applyPlugins(plugins, api, env) {
   for (const { name, plugin, options } of plugins) {
     logger.trace(`Applying plugin: ${name}`);

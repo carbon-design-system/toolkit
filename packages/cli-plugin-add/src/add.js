@@ -1,22 +1,14 @@
 'use strict';
 
-const {
-  loadConfig,
-  loadPlugin,
-  resolve: defaultResolve,
-} = require('@carbon/cli-config');
-const { createLogger } = require('@carbon/cli-tools');
+const { loadConfig } = require('@carbon/cli-config');
+// const { createLogger } = require('@carbon/cli-tools');
 const { createClient, getPackageInfoFrom } = require('@carbon/npm');
-const fs = require('fs-extra');
-const npmWhich = require('npm-which')(__dirname);
-const path = require('path');
+// const npmWhich = require('npm-which')(__dirname);
 const invariant = require('invariant');
-const util = require('util');
+// const util = require('util');
 
-const packageJson = require('../package.json');
-
-const logger = createLogger(packageJson.name);
-const which = util.promisify(npmWhich);
+// const logger = createLogger(packageJson.name);
+// const which = util.promisify(npmWhich);
 
 async function add(api, env, descriptors, cmd) {
   const { cwd, npmClient, spinner } = env;
@@ -27,7 +19,6 @@ async function add(api, env, descriptors, cmd) {
     writePackageJson,
     linkDependencies,
     installDependencies,
-    installDevDependencies,
   } = createClient(npmClient, cwd);
   if (error) {
     throw error;

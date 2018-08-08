@@ -9,5 +9,6 @@ module.exports = {
   loadConfig,
   loadPlugin,
   loadPlugins,
+  loadPresets,
   resolve,
 };

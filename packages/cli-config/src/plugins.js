@@ -3,7 +3,7 @@
 /**
  * Loads in plugin definitions from the given descriptors
  *
- * @param {Array<Descriptor | string>} descriptor
+ * @param {Array<Descriptor | string>} descriptors
  * @param {Function} resolve
  * @returns {Array<Plugin>}
  */

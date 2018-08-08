@@ -5,7 +5,7 @@ const { loadPlugins: defaultLoadPlugins } = require('./plugins');
 /**
  * Loads in preset definitions from the given descriptors
  *
- * @param {Array<Descriptor | string>} descriptor
+ * @param {Array<Descriptor | string>} descriptors
  * @param {Function} resolve
  * @returns {Array<Preset>}
  */
@@ -48,11 +48,11 @@ async function loadPreset(
 ) {
   const config = Array.isArray(descriptor) ? descriptor : [descriptor];
   const [name, options = {}] = config;
-  const { error, module: getPreset } = await resolve(name);
+  const { error: resolveError, module: getPreset } = await resolve(name);
 
-  if (error) {
+  if (resolveError) {
     return {
-      error,
+      error: resolveError,
       name,
       options,
     };

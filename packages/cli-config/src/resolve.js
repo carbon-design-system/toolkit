@@ -20,6 +20,7 @@ function isPathString(string) {
 
 function safeRequire(source) {
   try {
+    // eslint-disable-next-line import/no-dynamic-require
     return { module: require(source) };
   } catch (error) {
     return { error };

@@ -50,7 +50,7 @@ class Store {
  * Shallow equality comparison for two arrays
  * @param {Array[any]} collectionA
  * @param {Array[any]} collectionB
- * @return boolean
+ * @returns boolean
  */
 function isEqual(collectionA, collectionB) {
   if (collectionA.length !== collectionB.length) {

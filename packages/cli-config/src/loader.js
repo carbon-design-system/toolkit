@@ -12,7 +12,7 @@ const cosmiconfig = require('cosmiconfig');
 /**
  * @param {string} name The name of your module
  * @param {string} cwd The current directory of the process
- * @return LoaderResult
+ * @returns LoaderResult
  */
 async function loader(name, cwd = process.cwd()) {
   const options = {

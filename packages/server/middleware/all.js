@@ -2,7 +2,6 @@
 
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const applyMiddleware = require('../tools/applyMiddleware');
 
 module.exports = (server, context) => {
   server.disable('x-powered-by');

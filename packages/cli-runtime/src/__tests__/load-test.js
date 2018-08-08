@@ -16,7 +16,6 @@ describe('load', () => {
     let mockPackageJson;
     let mockVol;
     let mockFs;
-    let fs;
     let load;
 
     beforeEach(() => {
@@ -30,7 +29,6 @@ describe('load', () => {
       mockFs = createFsFromVolume(mockVol);
       jest.mock('fs', () => mockFs);
 
-      fs = require('fs-extra');
       load = require('../load');
     });
 
@@ -45,7 +43,6 @@ describe('load', () => {
     let mockPresetPackageJson;
     let mockVol;
     let mockFs;
-    let fs;
     let load;
 
     beforeEach(() => {
@@ -69,7 +66,6 @@ describe('load', () => {
       mockFs = createFsFromVolume(mockVol);
       jest.mock('fs', () => mockFs);
 
-      fs = require('fs-extra');
       load = require('../load');
     });
 
@@ -122,7 +118,6 @@ describe('load', () => {
     let mockPackageJson;
     let mockVol;
     let mockFs;
-    let fs;
     let load;
 
     beforeEach(() => {
@@ -139,7 +134,6 @@ describe('load', () => {
       mockFs = createFsFromVolume(mockVol);
       jest.mock('fs', () => mockFs);
 
-      fs = require('fs-extra');
       load = require('../load');
     });
 

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 'use strict';
 
 const { clearConsole, spawn } = require('@carbon/cli-tools');
@@ -46,13 +48,11 @@ module.exports = async ({ api, env }) => {
 
       if (await fs.exists(root)) {
         throw new Error(`A folder already exists at ${root}`);
-        return;
       }
 
       await fs.ensureDir(root);
 
       const {
-        readPackageJson,
         writePackageJson,
         installDependencies,
         linkDependencies,

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-var, no-console */
 'use strict';
 
 // Inspired by Create React App

@@ -24,7 +24,7 @@ describe('preset', () => {
     ];
     mockResolvePlugins = jest.fn(async descriptors => {
       const plugins = descriptors.map(descriptor => {
-        const [name, options = {}] = descriptor;
+        const [name] = descriptor;
         if (name.includes('should-resolve')) {
           return { module: mockModule };
         }

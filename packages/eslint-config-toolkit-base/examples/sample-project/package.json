@@ -15,6 +15,6 @@
     "eslint-plugin-import": "^2.7.0"
   },
   "eslintConfig": {
-    "extends": ["carbon-base"]
+    "extends": ["toolkit-base"]
   }
 }

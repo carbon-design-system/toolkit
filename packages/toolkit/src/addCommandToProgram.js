@@ -6,7 +6,7 @@ function addCommandToProgram(program, command, CLI_ENV) {
   const { name, description, options = [], action, ...rest } = command;
   const cliCommand = program.command(name).description(description);
 
-  for (let option of options) {
+  for (const option of options) {
     const { flags, description, defaults, development } = option;
 
     if (development) {
@@ -22,7 +22,7 @@ function addCommandToProgram(program, command, CLI_ENV) {
     }
   }
 
-  for (let key of Object.keys(rest)) {
+  for (const key of Object.keys(rest)) {
     if (cliCommand[key]) {
       cliCommand[key]();
     }
@@ -45,6 +45,7 @@ function addCommandToProgram(program, command, CLI_ENV) {
     try {
       await action(...commandArgs, options);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       process.exit(1);
     }

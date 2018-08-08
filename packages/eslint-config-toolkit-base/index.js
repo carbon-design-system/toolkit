@@ -11,6 +11,8 @@ module.exports = {
     './rules/style',
     './rules/variables',
     './plugins/imports',
+    './plugins/jsdoc',
+    './plugins/prettier',
   ].map(require.resolve),
   env: {
     // Enable these blindly because we can't make a per-file decision about this.

@@ -2,6 +2,8 @@
  * @jest-environment node
  */
 
+/* eslint-disable import/no-dynamic-require */
+
 'use strict';
 
 const path = require('path');
