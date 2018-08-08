@@ -1,6 +1,6 @@
 {
   "name": "@carbon/cli-runtime",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "main": "src/index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-runtime",
@@ -9,11 +9,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/cli-config": "0.0.8",
-    "@carbon/cli-plugin-add": "0.0.8",
-    "@carbon/cli-plugin-create": "0.0.8",
-    "@carbon/cli-tools": "0.0.8",
-    "@carbon/npm": "0.0.8",
+    "@carbon/cli-config": "0.0.9",
+    "@carbon/cli-plugin-add": "0.0.9",
+    "@carbon/cli-plugin-create": "0.0.9",
+    "@carbon/cli-tools": "0.0.9",
+    "@carbon/npm": "0.0.9",
     "joi": "^13.4.0",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",

@@ -1,6 +1,6 @@
 {
   "name": "@carbon/cli-config",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "main": "src/index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-config",
