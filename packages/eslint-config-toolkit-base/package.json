@@ -1,0 +1,28 @@
+{
+  "name": "eslint-config-toolkit-base",
+  "version": "0.0.7",
+  "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/eslint-config-toolkit-base",
+  "bugs": "https://github.com/carbon-design-system/toolkit/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "rules",
+    "plugins",
+    "index.js"
+  ],
+  "scripts": {
+    "lint": "eslint plugins rules __tests__"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.2.0",
+    "eslint-plugin-import": "^2.7.0"
+  },
+  "peerDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.2.0",
+    "eslint-plugin-import": "^2.7.0"
+  },
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "sample-project-base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint-config-spec-base": "9.0.0-alpha.0",
+    "eslint": "^4.2.0",
+    "eslint-plugin-import": "^2.7.0"
+  },
+  "eslintConfig": {
+    "extends": ["carbon-base"]
+  }
+}
