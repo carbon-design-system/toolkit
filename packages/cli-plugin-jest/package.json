@@ -1,0 +1,22 @@
+{
+  "name": "@carbon/cli-plugin-jest",
+  "version": "0.0.11",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-plugin-jest",
+  "bugs": "https://github.com/carbon-design-system/toolkit/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0-rc.0",
+    "babel-preset-carbon": "0.0.11",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.0",
+    "jest": "^23.4.1",
+    "lodash.merge": "^4.6.1",
+    "object-assign": "^4.1.1",
+    "promise": "^8.0.1",
+    "whatwg-fetch": "^2.0.4"
+  }
+}

@@ -29,6 +29,10 @@ async function add(api, env, descriptors, cmd) {
     throw loadConfigError;
   }
 
+  if (!config) {
+    throw new Error(`No configuration found for toolkit in: ${env.cwd}`);
+  }
+
   for (const { name, version } of packages) {
     spinner.text = `Adding plugin ${name}`;
     spinner.start();

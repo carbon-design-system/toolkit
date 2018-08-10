@@ -30,6 +30,8 @@ class PluginAPI {
   getCommands() {
     return this.commands;
   }
+
+  add() {}
 }
 
 module.exports = PluginAPI;
