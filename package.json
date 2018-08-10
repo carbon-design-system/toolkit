@@ -40,7 +40,11 @@
     ]
   },
   "lint-staged": {
-    "*.{js,md}": [
+    "*.{md}": [
+      "yarn format",
+      "git add"
+    ],
+    "*.{js}": [
       "yarn format",
       "yarn lint",
       "git add"
