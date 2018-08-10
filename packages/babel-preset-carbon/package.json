@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-carbon",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/babel-preset-carbon",
@@ -23,6 +23,6 @@
     "@babel/plugin-transform-runtime": "7.0.0-rc.0",
     "@babel/preset-env": "7.0.0-rc.0",
     "@babel/preset-react": "7.0.0-rc.0",
-    "browserslist-config-carbon": "0.0.11"
+    "browserslist-config-carbon": "0.0.12"
   }
 }
