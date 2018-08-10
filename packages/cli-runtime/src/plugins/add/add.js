@@ -1,6 +1,6 @@
 'use strict';
 
-const { loadConfig } = require('@carbon/cli-config');
+const { loadConfig, loadPlugin, resolve } = require('@carbon/cli-config');
 // const { createLogger } = require('@carbon/cli-tools');
 const { createClient, getPackageInfoFrom } = require('@carbon/npm');
 // const npmWhich = require('npm-which')(__dirname);
@@ -59,6 +59,16 @@ async function add(api, env, descriptors, cmd) {
         plugins: [...projectPackageJson.toolkit.plugins, name],
       },
     });
+
+    const { error: loadPluginError, options, plugin } = await loadPlugin(
+      name,
+      resolve
+    );
+    if (loadPluginError) {
+      throw loadPluginError;
+    }
+
+    // await api.addPlugin(plugin, options, { env });
 
     spinner.succeed();
   }

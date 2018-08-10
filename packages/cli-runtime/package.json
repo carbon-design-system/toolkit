@@ -10,14 +10,15 @@
   },
   "dependencies": {
     "@carbon/cli-config": "0.0.11",
-    "@carbon/cli-plugin-add": "0.0.11",
-    "@carbon/cli-plugin-create": "0.0.11",
-    "@carbon/cli-plugin-init": "0.0.11",
     "@carbon/cli-tools": "0.0.11",
     "@carbon/npm": "0.0.11",
+    "fs-extra": "^7.0.0",
+    "inquirer": "^6.1.0",
+    "invariant": "^2.2.4",
     "joi": "^13.4.0",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
+    "npm-which": "^3.0.1",
     "ora": "^3.0.0"
   },
   "devDependencies": {

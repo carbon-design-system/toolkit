@@ -13,17 +13,17 @@ const Store = require('./Store');
 const defaultPlugins = [
   {
     name: '@carbon/cli-plugin-add',
-    plugin: require('@carbon/cli-plugin-add'),
+    plugin: require('./plugins/add'),
     options: {},
   },
   {
     name: '@carbon/cli-plugin-create',
-    plugin: require('@carbon/cli-plugin-create'),
+    plugin: require('./plugins/create'),
     options: {},
   },
   {
     name: '@carbon/cli-plugin-init',
-    plugin: require('@carbon/cli-plugin-init'),
+    plugin: require('./plugins/init'),
     options: {},
   },
 ];

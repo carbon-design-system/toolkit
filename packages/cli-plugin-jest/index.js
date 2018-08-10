@@ -50,7 +50,8 @@ module.exports = ({ api, options }) => {
     },
   });
 
-  api.add(async ({ extendPackageJson }) => {
+  // api.add(async ({ extendPackageJson }) => {
+  api.add(async () => {
     console.log('adding script...');
     // await extendPackageJson(({ cliPath, packageJson }) => ({
     // scripts: {

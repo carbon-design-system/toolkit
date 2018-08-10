@@ -8,19 +8,17 @@ const fs = require('fs-extra');
 const inquirer = require('inquirer');
 const npmWhich = require('npm-which')(__dirname);
 const path = require('path');
-const packageJson = require('./package.json');
 const util = require('util');
 
+const logger = createLogger('@carbon/cli-plugin-init');
 const which = util.promisify(npmWhich);
-
-const logger = createLogger(packageJson.name);
 
 module.exports = async ({ api, env }) => {
   const { spinner } = env;
 
   api.addCommand({
-    name: 'create <project-name>',
-    description: 'create a new project',
+    name: 'init',
+    description: 'initialize the toolkit in the current directory',
     options: [
       {
         flags: '--link',
@@ -38,38 +36,37 @@ module.exports = async ({ api, env }) => {
         defaults: await getClient(env.cwd),
       },
     ],
-    async action(name, cmd) {
+    async action(cmd) {
       const { cwd, npmClient } = env;
       const { link, linkCli } = cmd;
-      const root = path.join(cwd, name);
 
-      logger.trace('Creating project:', name, 'at:', root);
+      logger.trace('Initializing toolkit in folder:', cwd);
 
-      if (await fs.exists(root)) {
-        throw new Error(`A folder already exists at ${root}`);
+      const packageJsonPath = path.join(cwd, 'package.json');
+
+      if (!(await fs.exists(packageJsonPath))) {
+        throw new Error(`No \`package.json\` file found at ${packageJsonPath}`);
       }
 
-      await fs.ensureDir(root);
-
       const {
+        readPackageJson,
         writePackageJson,
         installDependencies,
         linkDependencies,
-      } = createClient(npmClient, root);
-      const packageJson = {
-        name,
-        private: true,
-        license: 'MIT',
-        scripts: {
-          toolkit: 'toolkit',
-        },
-        dependencies: {},
-        toolkit: {
-          plugins: [],
-        },
+      } = createClient(npmClient, cwd);
+      const initPackageJson = await readPackageJson();
+
+      if (initPackageJson.toolkit) {
+        throw new Error(
+          `\`package.json\` at ${cwd} has a "toolkit" field already defined`
+        );
+      }
+
+      initPackageJson.toolkit = {
+        plugins: [],
       };
 
-      await writePackageJson(packageJson);
+      await writePackageJson(initPackageJson);
 
       if (env.CLI_ENV === 'production') {
         clearConsole();
@@ -107,19 +104,13 @@ module.exports = async ({ api, env }) => {
             'you find by running:'
         );
         console.log();
-        console.log('  yarn toolkit add <plugin-name>');
-        console.log();
-        console.log('You can now view your project in:', name);
-        console.log();
-        console.log('We suggest that you begin by typing:');
-        console.log();
-        console.log(`  cd ${name}`);
+        console.log('  toolkit add <plugin-name>');
         console.log();
         console.log('Happy hacking!');
         return;
       }
 
-      const toolkit = await which('toolkit', { cwd: root });
+      const toolkit = await which('toolkit', { cwd });
 
       spinner.start();
       spinner.info('Adding plugins');
@@ -127,7 +118,7 @@ module.exports = async ({ api, env }) => {
       for (const plugin of answers.plugins) {
         const args = ['add', plugin, link && '--link'].filter(Boolean);
         await spawn(toolkit, args, {
-          cwd: root,
+          cwd,
           stdio: 'inherit',
         });
       }
@@ -135,19 +126,7 @@ module.exports = async ({ api, env }) => {
       spinner.stop();
 
       console.log();
-      console.log(`Success! Created ${name} at ${root}`);
-      console.log('Inside that directory, you will find your new project.');
-      console.log();
-      console.log('We suggest that you begin by typing:');
-      console.log();
-      console.log(`  cd ${name}`);
-      console.log(`  yarn toolkit --help`);
-      console.log();
-      console.log(
-        'This should help give you a good idea of what is available. Also, ' +
-          'make sure to check out your `package.json` scripts to see what ' +
-          'has been added.'
-      );
+      console.log(`Success! Initialized toolkit in ${packageJsonPath}`);
       console.log();
       console.log('Happy hacking!');
     },

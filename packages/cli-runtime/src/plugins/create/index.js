@@ -9,17 +9,17 @@ const inquirer = require('inquirer');
 const npmWhich = require('npm-which')(__dirname);
 const path = require('path');
 const util = require('util');
-const packageJson = require('./package.json');
 
-const logger = createLogger(packageJson.name);
 const which = util.promisify(npmWhich);
+
+const logger = createLogger('@carbon/cli-plugin-create');
 
 module.exports = async ({ api, env }) => {
   const { spinner } = env;
 
   api.addCommand({
-    name: 'init',
-    description: 'initialize the toolkit in the current directory',
+    name: 'create <project-name>',
+    description: 'create a new project',
     options: [
       {
         flags: '--link',
@@ -37,37 +37,38 @@ module.exports = async ({ api, env }) => {
         defaults: await getClient(env.cwd),
       },
     ],
-    async action(cmd) {
+    async action(name, cmd) {
       const { cwd, npmClient } = env;
       const { link, linkCli } = cmd;
+      const root = path.join(cwd, name);
 
-      logger.trace('Initializing toolkit in folder:', cwd);
+      logger.trace('Creating project:', name, 'at:', root);
 
-      const packageJsonPath = path.join(cwd, 'package.json');
-
-      if (!(await fs.exists(packageJsonPath))) {
-        throw new Error(`No \`package.json\` file found at ${packageJsonPath}`);
+      if (await fs.exists(root)) {
+        throw new Error(`A folder already exists at ${root}`);
       }
 
+      await fs.ensureDir(root);
+
       const {
-        readPackageJson,
         writePackageJson,
         installDependencies,
         linkDependencies,
-      } = createClient(npmClient, cwd);
-      const initPackageJson = await readPackageJson();
-
-      if (initPackageJson.toolkit) {
-        throw new Error(
-          `\`package.json\` at ${cwd} has a "toolkit" field already defined`
-        );
-      }
-
-      initPackageJson.toolkit = {
-        plugins: [],
+      } = createClient(npmClient, root);
+      const packageJson = {
+        name,
+        private: true,
+        license: 'MIT',
+        scripts: {
+          toolkit: 'toolkit',
+        },
+        dependencies: {},
+        toolkit: {
+          plugins: [],
+        },
       };
 
-      await writePackageJson(initPackageJson);
+      await writePackageJson(packageJson);
 
       if (env.CLI_ENV === 'production') {
         clearConsole();
@@ -105,13 +106,19 @@ module.exports = async ({ api, env }) => {
             'you find by running:'
         );
         console.log();
-        console.log('  toolkit add <plugin-name>');
+        console.log('  yarn toolkit add <plugin-name>');
+        console.log();
+        console.log('You can now view your project in:', name);
+        console.log();
+        console.log('We suggest that you begin by typing:');
+        console.log();
+        console.log(`  cd ${name}`);
         console.log();
         console.log('Happy hacking!');
         return;
       }
 
-      const toolkit = await which('toolkit', { cwd });
+      const toolkit = await which('toolkit', { cwd: root });
 
       spinner.start();
       spinner.info('Adding plugins');
@@ -119,7 +126,7 @@ module.exports = async ({ api, env }) => {
       for (const plugin of answers.plugins) {
         const args = ['add', plugin, link && '--link'].filter(Boolean);
         await spawn(toolkit, args, {
-          cwd,
+          cwd: root,
           stdio: 'inherit',
         });
       }
@@ -127,7 +134,19 @@ module.exports = async ({ api, env }) => {
       spinner.stop();
 
       console.log();
-      console.log(`Success! Initialized toolkit in ${packageJsonPath}`);
+      console.log(`Success! Created ${name} at ${root}`);
+      console.log('Inside that directory, you will find your new project.');
+      console.log();
+      console.log('We suggest that you begin by typing:');
+      console.log();
+      console.log(`  cd ${name}`);
+      console.log(`  yarn toolkit --help`);
+      console.log();
+      console.log(
+        'This should help give you a good idea of what is available. Also, ' +
+          'make sure to check out your `package.json` scripts to see what ' +
+          'has been added.'
+      );
       console.log();
       console.log('Happy hacking!');
     },

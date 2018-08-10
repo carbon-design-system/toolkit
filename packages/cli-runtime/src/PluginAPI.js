@@ -6,6 +6,7 @@ const { validate } = require('./validation/command');
 class PluginAPI {
   constructor({ store = new Store() } = {}) {
     this.commands = [];
+    this.lifecycle = { add: [] };
     this.store = store;
   }
 
@@ -31,7 +32,20 @@ class PluginAPI {
     return this.commands;
   }
 
-  add() {}
+  add(thunk) {
+    if (typeof thunk === 'function') {
+      this.lifecycle.add.push(thunk);
+    }
+  }
+
+  async addPlugin(plugin, options, { env }) {
+    this.lifecycle.add = [];
+    await plugin({ api: this, options, env });
+
+    for (const thunk of this.lifecycle.add) {
+      await thunk();
+    }
+  }
 }
 
 module.exports = PluginAPI;
