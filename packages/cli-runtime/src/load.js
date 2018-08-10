@@ -21,6 +21,11 @@ const defaultPlugins = [
     plugin: require('@carbon/cli-plugin-create'),
     options: {},
   },
+  {
+    name: '@carbon/cli-plugin-init',
+    plugin: require('@carbon/cli-plugin-init'),
+    options: {},
+  },
 ];
 
 const noopSpinner = {

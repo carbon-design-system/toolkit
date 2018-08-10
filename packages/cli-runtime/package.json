@@ -12,6 +12,7 @@
     "@carbon/cli-config": "0.0.10",
     "@carbon/cli-plugin-add": "0.0.10",
     "@carbon/cli-plugin-create": "0.0.10",
+    "@carbon/cli-plugin-init": "0.0.10",
     "@carbon/cli-tools": "0.0.10",
     "@carbon/npm": "0.0.10",
     "joi": "^13.4.0",
