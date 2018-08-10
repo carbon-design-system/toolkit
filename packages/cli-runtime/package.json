@@ -17,6 +17,7 @@
     "invariant": "^2.2.4",
     "joi": "^13.4.0",
     "lodash.get": "^4.4.2",
+    "lodash.merge": "^4.6.1",
     "lodash.set": "^4.3.2",
     "npm-which": "^3.0.1",
     "ora": "^3.0.0"

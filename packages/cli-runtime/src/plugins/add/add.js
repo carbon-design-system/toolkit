@@ -1,14 +1,13 @@
 'use strict';
 
 const { loadConfig, loadPlugin, resolve } = require('@carbon/cli-config');
-// const { createLogger } = require('@carbon/cli-tools');
 const { createClient, getPackageInfoFrom } = require('@carbon/npm');
-// const npmWhich = require('npm-which')(__dirname);
+const npmWhich = require('npm-which')(__dirname);
 const invariant = require('invariant');
-// const util = require('util');
+const { create } = require('./project');
+const util = require('util');
 
-// const logger = createLogger(packageJson.name);
-// const which = util.promisify(npmWhich);
+const which = util.promisify(npmWhich);
 
 async function add(api, env, descriptors, cmd) {
   const { cwd, npmClient, spinner } = env;
@@ -19,6 +18,7 @@ async function add(api, env, descriptors, cmd) {
     writePackageJson,
     linkDependencies,
     installDependencies,
+    installDevDependencies,
   } = createClient(npmClient, cwd);
   if (error) {
     throw error;
@@ -68,7 +68,27 @@ async function add(api, env, descriptors, cmd) {
       throw loadPluginError;
     }
 
-    // await api.addPlugin(plugin, options, { env });
+    const lifecycle = api.fork(name);
+
+    await plugin({
+      api: lifecycle,
+      options,
+      env,
+    });
+
+    await lifecycle.run(
+      'add',
+      create({
+        cliPath: cmd.linkCli ? await which('toolkit') : 'toolkit',
+        npmClient,
+        readPackageJson,
+        writePackageJson,
+        installDependencies,
+        installDevDependencies,
+        linkDependencies,
+        root: cwd,
+      })
+    );
 
     spinner.succeed();
   }

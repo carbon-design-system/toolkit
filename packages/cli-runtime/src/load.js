@@ -7,8 +7,8 @@ const {
 const { getClient: defaultGetClient } = require('@carbon/npm');
 const ora = require('ora');
 const { logger } = require('./logger');
-const PluginAPI = require('./PluginAPI');
-const Store = require('./Store');
+// const PluginAPI = require('./PluginAPI');
+const { Store, create } = require('./api');
 
 const defaultPlugins = [
   {
@@ -49,7 +49,8 @@ async function load({
 
   const { TOOLKIT_CLI_ENV: CLI_ENV = 'production' } = process.env;
   const store = new Store();
-  const api = new PluginAPI({ store });
+  // const api = new PluginAPI({ store });
+  const api = create({ store });
   const env = {
     CLI_ENV,
     cwd,
@@ -95,7 +96,7 @@ async function applyPlugins(plugins, api, env) {
   for (const { name, plugin, options } of plugins) {
     logger.trace(`Applying plugin: ${name}`);
     await plugin({
-      api,
+      api: api.fork(name),
       options,
       env,
     });
