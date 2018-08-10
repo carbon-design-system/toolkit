@@ -16,8 +16,8 @@
     "lerna": "lerna",
     "lint": "eslint packages",
     "precommit": "lint-staged",
-    "format": "prettier --write \"**/*.{scss,css,js}\"",
-    "format:diff": "prettier --list-different \"**/*.{scss,css,js}\"",
+    "format": "prettier --write \"**/*.{scss,css,js,md}\"",
+    "format:diff": "prettier --list-different \"**/*.{scss,css,js,md}\"",
     "test": "jest"
   },
   "devDependencies": {
