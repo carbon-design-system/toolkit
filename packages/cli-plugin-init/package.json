@@ -1,6 +1,6 @@
 {
   "name": "@carbon/cli-plugin-init",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-plugin-init",
@@ -9,8 +9,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/cli-tools": "0.0.10",
-    "@carbon/npm": "0.0.10",
+    "@carbon/cli-tools": "0.0.11",
+    "@carbon/npm": "0.0.11",
     "fs-extra": "^7.0.0",
     "inquirer": "^6.1.0"
   }
