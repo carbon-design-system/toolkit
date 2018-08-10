@@ -50,7 +50,7 @@ module.exports = ({ api, options }) => {
     },
   });
 
-  api.add(async ({ extendPackageJson }) => {
+  api.add(async ({ extendPackageJson, installDevDependencies }) => {
     await extendPackageJson(({ cliPath, packageJson }) => ({
       scripts: {
         test: `${cliPath} test`,
