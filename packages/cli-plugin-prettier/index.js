@@ -62,11 +62,14 @@ module.exports = async ({ api, env, options }) => {
   });
 
   api.add(async ({ extendPackageJson }) => {
-    await extendPackageJson(({ cliPath }) => ({
+    await extendPackageJson(({ cliPath, packageJson }) => ({
+      ...packageJson,
       scripts: {
+        ...packageJson.scripts,
         format: `${cliPath} format`,
         'format:diff': `${cliPath} format:diff`,
       },
+      prettier: prettierOptions,
     }));
   });
 };
