@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  verdaccio:
+    image: verdaccio/verdaccio:latest
+    ports:
+      - "4873:4873"
+    volumes:
+      - verdaccio:/verdaccio
+
+  toolkit:
+    build:
+      context: ../
+      dockerfile: ./e2e/Dockerfile
+    depends_on:
+      - verdaccio
+    volumes:
+      - ../e2e:/toolkit/e2e
+      - node_modules:/toolkit/node_modules
+
+volumes:
+  verdaccio:
+    driver: local
+  node_modules:
+    driver: local
