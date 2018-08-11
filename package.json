@@ -38,7 +38,12 @@
   "toolkit": {
     "plugins": [
       "@carbon/cli-plugin-prettier",
-      "@carbon/cli-plugin-jest"
+      ["@carbon/cli-plugin-jest", {
+        "testPathIgnorePatterns": [
+          "<rootDir>/packages/babel-preset-carbon/",
+          "<rootDir>/test"
+        ]
+      }]
     ]
   },
   "commitlint": {
