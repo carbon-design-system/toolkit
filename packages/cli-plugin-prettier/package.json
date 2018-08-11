@@ -1,0 +1,17 @@
+{
+  "name": "@carbon/cli-plugin-prettier",
+  "version": "0.0.13",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-plugin-prettier",
+  "bugs": "https://github.com/carbon-design-system/toolkit/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@carbon/cli-tools": "0.0.13",
+    "chalk": "^2.4.1",
+    "npm-which": "^3.0.1",
+    "prettier": "^1.14.2"
+  }
+}
