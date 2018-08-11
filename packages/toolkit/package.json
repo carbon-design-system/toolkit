@@ -1,6 +1,6 @@
 {
   "name": "@carbon/toolkit",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "license": "Apache-2.0",
   "bin": {
     "toolkit": "bin/index.js"
@@ -11,8 +11,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/cli-runtime": "0.0.12",
-    "@carbon/cli-tools": "0.0.12",
+    "@carbon/cli-runtime": "0.0.13",
+    "@carbon/cli-tools": "0.0.13",
     "chalk": "^2.4.1",
     "commander": "^2.17.0"
   }
