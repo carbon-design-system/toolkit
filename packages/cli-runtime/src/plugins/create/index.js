@@ -95,7 +95,7 @@ module.exports = async ({ api, env }) => {
             },
             {
               name: 'Jest',
-              value: '@carbon/cli-plugin-paths',
+              value: '@carbon/cli-plugin-jest',
             },
           ],
         },
