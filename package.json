@@ -18,7 +18,7 @@
     "precommit": "lint-staged",
     "format": "yarn toolkit format",
     "format:diff": "yarn toolkit format:diff",
-    "test": "jest",
+    "test": "yarn toolkit test",
     "toolkit": "./packages/toolkit/bin/index.js"
   },
   "devDependencies": {
@@ -37,7 +37,8 @@
   },
   "toolkit": {
     "plugins": [
-      "@carbon/cli-plugin-prettier"
+      "@carbon/cli-plugin-prettier",
+      "@carbon/cli-plugin-jest"
     ]
   },
   "commitlint": {
@@ -59,27 +60,10 @@
   "eslintConfig": {
     "extends": ["./packages/eslint-config-toolkit/index.js"]
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "<rootDir>/packages/**/*.js"
-    ],
-    "setupFiles": [],
-    "testMatch": [
-      "<rootDir>/**/__tests__/**/*.js?(x)"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/files/",
-      "/fixtures/",
-      "/packages-old/"
-    ],
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json"
-    ],
-    "snapshotSerializers": []
+  "prettier": {
+    "jsxBracketSameLine": true,
+    "printWidth": 80,
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }
