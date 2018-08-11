@@ -9,7 +9,7 @@ const { createFsFromVolume, Volume } = require('memfs');
 // eslint-disable-next-line no-console
 const originalConsoleLog = console.log;
 
-describe('create plugin', () => {
+xdescribe('create plugin', () => {
   let mockName;
   let mockCmd;
   let mockEnv;
