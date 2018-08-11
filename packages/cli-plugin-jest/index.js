@@ -1,7 +1,7 @@
 'use strict';
 
 const jest = require('jest');
-const merge = require('lodash.merge');
+const merge = require('lodash.mergewith');
 
 const defaultConfig = {
   collectCoverageFrom: ['src/**/*.js'],
@@ -38,7 +38,18 @@ module.exports = ({ api, options }) => {
     ],
     async action() {
       const jestConfig = await api.read('jest');
-      const config = merge(jestConfig, options);
+      const config = merge({}, jestConfig, options, (object, src) => {
+        if (Array.isArray(object) && Array.isArray(src)) {
+          return [...object, ...src];
+        }
+
+        if (typeof object === 'object' && typeof src === 'object') {
+          return {
+            ...object,
+            ...src,
+          };
+        }
+      });
       const args = process.argv.slice(3);
       const cliArgs = args.concat('--config', JSON.stringify(config));
 
