@@ -11,7 +11,7 @@ const schema = Joi.object()
       Joi.object().keys({
         flags: Joi.string().required(),
         description: Joi.string().required(),
-        defaults: Joi.string(),
+        defaults: [Joi.string(), Joi.func()],
         development: Joi.boolean(),
       })
     ),

@@ -10,7 +10,7 @@ const util = require('util');
 const which = util.promisify(npmWhich);
 
 async function add(api, env, descriptors, cmd) {
-  const { cwd, npmClient, spinner } = env;
+  const { cwd, npmClient } = env;
   const packages = descriptors.map(getPackageInfoFrom);
   const {
     error,
@@ -34,9 +34,6 @@ async function add(api, env, descriptors, cmd) {
   }
 
   for (const { name, version } of packages) {
-    spinner.text = `Adding plugin ${name}`;
-    spinner.start();
-
     invariant(
       !config.plugins.find(plugin => plugin.name === name),
       'Plugin `%s` has already been added to your config in: %s',
@@ -48,7 +45,7 @@ async function add(api, env, descriptors, cmd) {
     const dependency = cmd.link ? name : `${name}@${version}`;
 
     await installer([dependency], {
-      stdio: 'ignore',
+      // stdio: 'ignore',
     });
 
     const projectPackageJson = await readPackageJson();
@@ -89,8 +86,6 @@ async function add(api, env, descriptors, cmd) {
         root: cwd,
       })
     );
-
-    spinner.succeed();
   }
 }
 
