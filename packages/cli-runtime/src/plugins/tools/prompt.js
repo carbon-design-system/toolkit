@@ -14,6 +14,11 @@ const plugins = [
     description: 'Provides project path information',
   },
   {
+    name: 'prettier',
+    pkg: '@carbon/cli-plugin-prettier',
+    description: 'Setup prettier to format files in your codebase',
+  },
+  {
     name: 'jest',
     pkg: '@carbon/cli-plugin-jest',
     description: 'Setup Jest in a project',

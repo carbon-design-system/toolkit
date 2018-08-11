@@ -5,17 +5,15 @@
 const { clearConsole, createLogger, spawn } = require('@carbon/cli-tools');
 const { getClient, createClient } = require('@carbon/npm');
 const fs = require('fs-extra');
-const inquirer = require('inquirer');
 const npmWhich = require('npm-which')(__dirname);
 const path = require('path');
 const util = require('util');
+const { getPlugins } = require('../tools/prompt');
 
 const logger = createLogger('@carbon/cli-plugin-init');
 const which = util.promisify(npmWhich);
 
 module.exports = async ({ api, env }) => {
-  const { spinner } = env;
-
   api.addCommand({
     name: 'init',
     description: 'initialize the toolkit in the current directory',
@@ -76,24 +74,7 @@ module.exports = async ({ api, env }) => {
       console.log('We have a couple of questions to help get you started');
       console.log();
 
-      const answers = await inquirer.prompt([
-        {
-          type: 'checkbox',
-          name: 'plugins',
-          message: 'What plugins would you like to add to your project?',
-          choices: [
-            {
-              name: 'Environment plugin [@carbon/cli-plugin-env]',
-              value: '@carbon/cli-plugin-env',
-              checked: true,
-            },
-            {
-              name: 'Paths plugin [@carbon/cli-plugin-paths]',
-              value: '@carbon/cli-plugin-paths',
-            },
-          ],
-        },
-      ]);
+      const answers = await getPlugins();
 
       const installer = linkCli ? linkDependencies : installDependencies;
       await installer(['@carbon/toolkit']);
@@ -111,19 +92,11 @@ module.exports = async ({ api, env }) => {
       }
 
       const toolkit = await which('toolkit', { cwd });
-
-      spinner.start();
-      spinner.info('Adding plugins');
-
-      for (const plugin of answers.plugins) {
-        const args = ['add', plugin, link && '--link'].filter(Boolean);
-        await spawn(toolkit, args, {
-          cwd,
-          stdio: 'inherit',
-        });
-      }
-
-      spinner.stop();
+      const args = ['add', answers.plugins, link && '--link'].filter(Boolean);
+      await spawn(toolkit, args, {
+        cwd,
+        stdio: 'inherit',
+      });
 
       console.log();
       console.log(`Success! Initialized toolkit in ${packageJsonPath}`);
