@@ -5,7 +5,7 @@ const supportedHooks = new Set(['add']);
 function fork(config) {
   const { addCommand, extend, read } = config;
   return pluginName => {
-    const lifecycle = { add: null };
+    const lifecycle = { add: [] };
     return {
       addCommand(command) {
         return addCommand(command, pluginName);
@@ -15,39 +15,34 @@ function fork(config) {
       fork: fork(config),
 
       add(thunk) {
-        if (lifecycle.add) {
-          throw new Error(
-            'A hook for the `add` Plugin lifecycle method has already been ' +
-              `defined in plugin ${pluginName}`
-          );
-        }
-        lifecycle.add = {
+        lifecycle.add.push({
           plugin: pluginName,
           thunk,
-        };
+        });
       },
 
-      run(hook, options) {
+      async run(hook, options) {
         if (!supportedHooks.has(hook)) {
           throw new Error(
             `Unexpected hook ${hook}. Expected one of ${supportedHooks}`
           );
         }
 
-        if (!lifecycle[hook]) {
+        if (lifecycle[hook].length === 0) {
           return;
         }
-        const { pluginName, thunk } = lifecycle[hook];
 
-        if (typeof thunk !== 'function') {
-          throw new Error(
-            `Expected argument for lifecycle event ${hook} to be of type ` +
-              `function, instead received \`${typeof thunk}\` for plugin: ` +
-              pluginName
-          );
+        for (const { pluginName, thunk } of lifecycle[hook]) {
+          if (typeof thunk !== 'function') {
+            throw new Error(
+              `Expected argument for lifecycle event ${hook} to be of type ` +
+                `function, instead received \`${typeof thunk}\` for plugin: ` +
+                pluginName
+            );
+          }
+
+          await thunk(options);
         }
-
-        return thunk(options);
       },
     };
   };

@@ -33,10 +33,15 @@ module.exports = async ({ api, env }) => {
         description: 'specify an npm client to use [npm, yarn]',
         defaults: await getClient(env.cwd),
       },
+      {
+        flags: '--skip',
+        description: 'Skip the prompt for plugins',
+        defaults: false,
+      },
     ],
     async action(cmd) {
       const { cwd, npmClient } = env;
-      const { link, linkCli } = cmd;
+      const { link, linkCli, skip } = cmd;
 
       logger.trace('Initializing toolkit in folder:', cwd);
 
@@ -52,7 +57,7 @@ module.exports = async ({ api, env }) => {
         installDependencies,
         linkDependencies,
       } = createClient(npmClient, cwd);
-      const initPackageJson = await readPackageJson();
+      let initPackageJson = await readPackageJson();
 
       if (initPackageJson.toolkit) {
         throw new Error(
@@ -60,6 +65,12 @@ module.exports = async ({ api, env }) => {
         );
       }
 
+      await writePackageJson(initPackageJson);
+
+      const installer = linkCli ? linkDependencies : installDependencies;
+      await installer(['@carbon/toolkit']);
+
+      initPackageJson = await readPackageJson();
       initPackageJson.toolkit = {
         plugins: [],
       };
@@ -70,14 +81,16 @@ module.exports = async ({ api, env }) => {
         clearConsole();
       }
 
+      if (skip) {
+        displaySuccess(packageJsonPath);
+        return;
+      }
+
       console.log('Hi there! 👋');
       console.log('We have a couple of questions to help get you started');
       console.log();
 
       const answers = await getPlugins();
-
-      const installer = linkCli ? linkDependencies : installDependencies;
-      await installer(['@carbon/toolkit']);
 
       if (answers.plugins.length === 0) {
         console.log(
@@ -98,10 +111,14 @@ module.exports = async ({ api, env }) => {
         stdio: 'inherit',
       });
 
-      console.log();
-      console.log(`Success! Initialized toolkit in ${packageJsonPath}`);
-      console.log();
-      console.log('Happy hacking!');
+      displaySuccess(packageJsonPath);
     },
   });
 };
+
+function displaySuccess(packageJsonPath) {
+  console.log();
+  console.log(`Success! Initialized toolkit in ${packageJsonPath}`);
+  console.log();
+  console.log('Happy hacking!');
+}

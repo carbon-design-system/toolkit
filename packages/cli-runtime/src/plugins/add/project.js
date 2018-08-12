@@ -46,8 +46,10 @@ function copy(root) {
 }
 
 function write(root) {
-  return (filename, content, ...args) => {
-    return fs.writeFile(path.join(root, filename), content, ...args);
+  return async (filename, content, ...args) => {
+    const filePath = path.join(root, filename);
+    await fs.ensureFile(filePath);
+    return fs.writeFile(filePath, content, ...args);
   };
 }
 
