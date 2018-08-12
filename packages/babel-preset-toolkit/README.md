@@ -1,4 +1,4 @@
-# `babel-preset-carbon`
+# `babel-preset-toolkit`
 
 > Add plugin for `@carbon/toolkit`
 
@@ -7,13 +7,13 @@
 Run the following command using [npm](https://www.npmjs.com/):
 
 ```bash
-npm install -S babel-preset-carbon
+npm install -S babel-preset-toolkit
 ```
 
 If you prefer [Yarn](https://yarnpkg.com/en/), use the following command instead:
 
 ```bash
-yarn add babel-preset-carbon
+yarn add babel-preset-toolkit
 ```
 
 ## 🤲 Contributing

@@ -1,4 +1,4 @@
-# `browserslist-config-carbon`
+# `browserslist-config-toolkit`
 
 > Add plugin for `@carbon/toolkit`
 
@@ -7,13 +7,13 @@
 Run the following command using [npm](https://www.npmjs.com/):
 
 ```bash
-npm install -S browserslist-config-carbon
+npm install -S browserslist-config-toolkit
 ```
 
 If you prefer [Yarn](https://yarnpkg.com/en/), use the following command instead:
 
 ```bash
-yarn add browserslist-config-carbon
+yarn add browserslist-config-toolkit
 ```
 
 ## 🤲 Contributing
