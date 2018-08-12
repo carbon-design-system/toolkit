@@ -22,5 +22,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
       - run: yarn ci-check
+
+      - run: docker-compose --help
