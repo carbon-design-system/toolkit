@@ -10,7 +10,7 @@ module.exports = declare((api, options = {}) => {
         require.resolve('@babel/preset-env'),
         {
           targets: {
-            browsers: ['extends browserslist-config-carbon'],
+            browsers: ['extends browserslist-config-toolkit'],
           },
           modules: process.env.BABEL_ENV === 'es' ? false : 'commonjs',
           ...options,
