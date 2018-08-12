@@ -1,5 +1,5 @@
 {
-  "name": "@carbon/toolkit",
+  "name": "toolkit-monorepo",
   "version": "0.0.0",
   "private": true,
   "workspaces": {
