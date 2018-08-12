@@ -80,6 +80,8 @@ npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_reg
   --force-publish=* \
   --npm-tag=latest
 
+export TOOLKIT_CLI_ENV=test
+
 for script in ./e2e/tests/*; do
   /bin/bash $script
 done
