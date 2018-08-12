@@ -9,6 +9,6 @@
     "access": "public"
   },
   "dependencies": {
-    "babel-preset-carbon": "0.0.14"
+    "babel-preset-toolkit": "0.0.14"
   }
 }
