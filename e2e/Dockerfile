@@ -7,4 +7,6 @@ WORKDIR /toolkit
 COPY . .
 RUN yarn
 
-CMD ["./test.sh"]
+RUN ls -al e2e
+
+CMD ["/toolkit/e2e/test.sh"]

@@ -22,5 +22,16 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: yarn ci-check
+      - run:
+          name: Run ci checks
+          command: yarn ci-check
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - run:
+          name: Run end-to-end tests
+          command: |
+            docker-compose -f e2e/docker-compose.yml build
+            docker-compose -f e2e/docker-compose.yml run test
+            docker-compose -f e2e/docker-compose.yml down -v
