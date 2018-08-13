@@ -3,6 +3,7 @@
 # Echo every command being executed
 set -x
 
+TOOLKIT_CLI_ENV=test
 temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
 
 function cleanup {
@@ -14,6 +15,5 @@ function cleanup {
 cd "$temp_app_path"
 yarn init -y
 npx @carbon/toolkit init --skip
-cat package.json
 
 cleanup

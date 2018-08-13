@@ -13,6 +13,9 @@ function cleanup {
 }
 
 cd "$temp_app_path"
-npx @carbon/toolkit create test-default --plugins "@carbon/cli-plugin-env,@carbon/cli-plugin-paths"
+yarn init -y
+npx @carbon/toolkit init --skip
+yarn toolkit add @carbon/cli-plugin-prettier @carbon/cli-plugin-editorconfig
+cat package.json
 
 cleanup
