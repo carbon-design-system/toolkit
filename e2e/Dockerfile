@@ -7,4 +7,7 @@ WORKDIR /toolkit
 COPY . .
 RUN yarn
 
+RUN ls -al
+RUN pwd
+
 CMD ["/toolkit/e2e/test.sh"]
