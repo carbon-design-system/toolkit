@@ -14,12 +14,12 @@ services:
       dockerfile: ./e2e/Dockerfile
     depends_on:
       - verdaccio
-    volumes:
-      - ../e2e:/toolkit/e2e
-      - node_modules:/toolkit/node_modules
+    # volumes:
+      # - ../e2e:/toolkit/e2e
+      # - node_modules:/toolkit/node_modules
 
 volumes:
   verdaccio:
     driver: local
-  node_modules:
-    driver: local
+  # node_modules:
+    # driver: local
