@@ -54,10 +54,14 @@ module.exports = async ({ api, env, options }) => {
       // eslint-disable-next-line no-console
       console.log(chalk.grey(`prettier ${args.join(' ')}`));
 
-      await spawn(prettier, args, {
-        stdio: 'inherit',
-        cwd: env.cwd,
-      });
+      try {
+        await spawn(prettier, args, {
+          stdio: 'inherit',
+          cwd: env.cwd,
+        });
+      } catch (error) {
+        process.exit(1);
+      }
     },
   });
 
