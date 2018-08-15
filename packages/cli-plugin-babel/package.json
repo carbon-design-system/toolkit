@@ -1,6 +1,6 @@
 {
   "name": "@carbon/cli-plugin-babel",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-plugin-babel",
@@ -9,6 +9,6 @@
     "access": "public"
   },
   "dependencies": {
-    "babel-preset-toolkit": "0.0.16"
+    "babel-preset-toolkit": "0.0.17"
   }
 }
