@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 'use strict';
 
 const { createClient } = require('@carbon/npm');

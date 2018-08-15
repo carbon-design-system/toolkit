@@ -5,7 +5,6 @@ const {
   resolve: defaultResolve,
 } = require('@carbon/cli-config');
 const { getClient: defaultGetClient } = require('@carbon/npm');
-const ora = require('ora');
 const { logger } = require('./logger');
 const { Store, create } = require('./api');
 
@@ -26,15 +25,6 @@ const defaultPlugins = [
     options: {},
   },
 ];
-
-const noopSpinner = {
-  start() {},
-  stop() {},
-  succeed() {},
-  fail() {},
-  warn() {},
-  info() {},
-};
 
 async function load({
   cwd = process.cwd(),

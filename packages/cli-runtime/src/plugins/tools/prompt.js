@@ -1,7 +1,5 @@
 'use strict';
 
-const inquirer = require('inquirer');
-
 const plugins = [
   {
     name: 'env',

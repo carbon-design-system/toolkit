@@ -10,6 +10,7 @@ const devSpinner = ['start', 'stop', 'succeed', 'fail', 'warn', 'info'].reduce(
   (acc, method) => ({
     ...acc,
     [method](...args) {
+      // eslint-disable-next-line no-console
       console.log(`[${method.toUpperCase()}]`, ...args);
     },
   }),

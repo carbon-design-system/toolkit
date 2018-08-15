@@ -4,7 +4,6 @@ const { loadConfig, loadPlugin, resolve } = require('@carbon/cli-config');
 const { createClient, getPackageInfoFrom } = require('@carbon/npm');
 const invariant = require('invariant');
 const { create } = require('./project');
-const util = require('util');
 
 async function add(api, env, descriptors, cmd) {
   const { cwd, npmClient } = env;
@@ -72,7 +71,7 @@ async function add(api, env, descriptors, cmd) {
     await lifecycle.run(
       'add',
       create({
-        cliPath: cmd.linkCli ? await which('toolkit') : 'toolkit',
+        cliPath: cmd.linkCli ? await api.which('toolkit') : 'toolkit',
         npmClient,
         readPackageJson,
         writePackageJson,
