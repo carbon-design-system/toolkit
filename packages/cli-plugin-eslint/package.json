@@ -1,0 +1,16 @@
+{
+  "name": "@carbon/cli-plugin-eslint",
+  "private": true,
+  "version": "0.0.15",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-plugin-eslint",
+  "bugs": "https://github.com/carbon-design-system/toolkit/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-toolkit": "0.0.15"
+  }
+}
