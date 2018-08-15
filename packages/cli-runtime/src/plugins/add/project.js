@@ -15,7 +15,9 @@ function create({
   root,
 }) {
   return {
-    copy: copy(root),
+    copyFolder(source, target = path.basename(source)) {
+      return fs.copy(source, path.join(root, target));
+    },
     write: write(root),
     extendPackageJson: extendPackageJson(
       cliPath,
@@ -26,22 +28,6 @@ function create({
     installDependencies,
     installDevDependencies,
     linkDependencies,
-  };
-}
-
-function copy(root) {
-  return async (files, { baseDir } = {}) => {
-    return Promise.all(
-      files.map(filepath => {
-        if (baseDir) {
-          return fs.copy(
-            filepath,
-            path.resolve(root, path.relative(baseDir, filepath))
-          );
-        }
-        return fs.copy(filepath, root);
-      })
-    );
   };
 }
 
