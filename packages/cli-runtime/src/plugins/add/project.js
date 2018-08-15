@@ -70,6 +70,5 @@ function alphabetize(object) {
 
 module.exports = {
   create,
-  copy,
   write,
 };
