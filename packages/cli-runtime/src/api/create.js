@@ -4,7 +4,7 @@ const fork = require('./fork');
 const Store = require('./Store');
 const { validate } = require('./validation/command');
 
-function create({ store = new Store() }) {
+function create({ env, store = new Store() }) {
   const commands = [];
 
   function addCommand(command, plugin) {
@@ -21,6 +21,7 @@ function create({ store = new Store() }) {
   return {
     fork: fork({
       addCommand,
+      env,
       extend(...args) {
         return store.write(...args);
       },
@@ -28,10 +29,10 @@ function create({ store = new Store() }) {
         return store.read(...args);
       },
     }),
-    store,
     getCommands() {
       return commands.map(({ command }) => command);
     },
+    store,
   };
 }
 

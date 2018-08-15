@@ -41,7 +41,7 @@
       ["@carbon/cli-plugin-jest", {
         "testPathIgnorePatterns": [
           "<rootDir>/packages/babel-preset-toolkit/",
-          "<rootDir>/test"
+          "<rootDir>/test/"
         ]
       }]
     ]

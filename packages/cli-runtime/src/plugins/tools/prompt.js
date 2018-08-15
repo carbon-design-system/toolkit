@@ -30,12 +30,12 @@ const plugins = [
   },
 ];
 
-function getPlugins() {
+function getPlugins(prompt) {
   const choices = plugins.map(plugin => ({
     name: `${plugin.name} (https://npmjs.com/package/${plugin.pkg})`,
-    value: plugin.name,
+    value: plugin.pkg,
   }));
-  return inquirer.prompt([
+  return prompt([
     {
       type: 'checkbox',
       name: 'plugins',

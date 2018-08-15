@@ -2,16 +2,14 @@
 
 const { loadConfig, loadPlugin, resolve } = require('@carbon/cli-config');
 const { createClient, getPackageInfoFrom } = require('@carbon/npm');
-const npmWhich = require('npm-which')(__dirname);
 const invariant = require('invariant');
 const { create } = require('./project');
 const util = require('util');
 
-const which = util.promisify(npmWhich);
-
 async function add(api, env, descriptors, cmd) {
   const { cwd, npmClient } = env;
   const packages = descriptors.map(getPackageInfoFrom);
+
   const {
     error,
     readPackageJson,

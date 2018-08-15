@@ -1,18 +1,48 @@
 'use strict';
 
-const supportedHooks = new Set(['add']);
+const { clearConsole, createLogger, spawn } = require('@carbon/cli-tools');
+const inquirer = require('inquirer');
+const ora = require('ora');
+const npmWhich = require('npm-which');
+const util = require('util');
+
+const devSpinner = ['start', 'stop', 'succeed', 'fail', 'warn', 'info'].reduce(
+  (acc, method) => ({
+    ...acc,
+    [method](...args) {
+      console.log(`[${method.toUpperCase()}]`, ...args);
+    },
+  }),
+  {}
+);
+const supportedHooks = new Set(['add', 'update', 'upgrade']);
 
 function fork(config) {
-  const { addCommand, extend, read } = config;
+  const { addCommand, env, extend, read } = config;
+  const { CLI_ENV } = env;
+  const which = util.promisify(npmWhich(env.cwd));
   return pluginName => {
-    const lifecycle = { add: [] };
+    const lifecycle = { add: [], update: [], upgrade: [] };
     return {
+      clearConsole() {
+        if (CLI_ENV === 'production') {
+          clearConsole();
+        }
+      },
+      createLogger() {
+        return createLogger(pluginName);
+      },
+      extend,
+      read,
+      prompt: inquirer.prompt,
+      spawn,
+      spinner: CLI_ENV === 'production' ? ora() : devSpinner,
+      fork: fork(config),
+      which,
+
       addCommand(command) {
         return addCommand(command, pluginName);
       },
-      read,
-      extend,
-      fork: fork(config),
 
       add(thunk) {
         lifecycle.add.push({

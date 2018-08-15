@@ -48,13 +48,12 @@ async function load({
 
   const { TOOLKIT_CLI_ENV: CLI_ENV = 'production' } = process.env;
   const store = new Store();
-  const api = create({ store });
   const env = {
     CLI_ENV,
     cwd,
     npmClient: await getClient(cwd),
-    spinner: CLI_ENV === 'production' ? ora() : noopSpinner,
   };
+  const api = create({ env, store });
 
   await applyPlugins(defaultPlugins, api, env);
 
