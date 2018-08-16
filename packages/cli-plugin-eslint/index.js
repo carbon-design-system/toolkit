@@ -6,7 +6,7 @@ const defaultConfig = {
   extends: ['eslint-config-toolkit'],
 };
 
-module.exports = ({ api, env, options }) => {
+module.exports = ({ api, options }) => {
   const eslintConfig = {
     ...defaultConfig,
     ...options,
