@@ -16,7 +16,7 @@ async function add(api, env, descriptors, cmd) {
     linkDependencies,
     installDependencies,
     installDevDependencies,
-  } = createClient(npmClient, cwd);
+  } = await createClient(npmClient, cwd);
   if (error) {
     throw error;
   }

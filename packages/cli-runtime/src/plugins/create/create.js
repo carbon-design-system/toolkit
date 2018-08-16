@@ -30,7 +30,7 @@ async function create(name, cmd, env) {
     writePackageJson,
     installDependencies,
     linkDependencies,
-  } = createClient(npmClient, root);
+  } = await createClient(npmClient, root);
   const packageJson = {
     name,
     private: true,

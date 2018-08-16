@@ -28,7 +28,7 @@ async function init(api, cmd, env) {
     writePackageJson,
     installDependencies,
     linkDependencies,
-  } = createClient(npmClient, cwd);
+  } = await createClient(npmClient, cwd);
   if (error) {
     throw error;
   }

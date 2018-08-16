@@ -19,7 +19,13 @@ const { spawn } = require('@carbon/cli-tools');
  * client's lockfile
  * @returns {Function}
  */
-function createInstaller(npmClient, cwd, installCommand, saveFlag) {
+function createInstaller(
+  npmClient,
+  cwd,
+  installCommand,
+  saveFlag,
+  isWorkspaceRoot
+) {
   /**
    * Runs the install command for the given packages
    *
@@ -32,7 +38,12 @@ function createInstaller(npmClient, cwd, installCommand, saveFlag) {
       ? getDependenciesFromArray(packages, installCommand)
       : getDependenciesFromObject(packages, installCommand);
 
-    const args = [installCommand, ...dependencies, saveFlag].filter(Boolean);
+    const args = [
+      installCommand,
+      ...dependencies,
+      installCommand !== 'link' && isWorkspaceRoot ? '--dev' : saveFlag,
+      isWorkspaceRoot && '-W',
+    ].filter(Boolean);
     return spawn(npmClient, args, {
       cwd,
       stdio,
