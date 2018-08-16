@@ -9,8 +9,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@babel/core": "^7.0.0-rc.0",
-    "@babel/runtime": "^7.0.0-rc.0",
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/runtime": "^7.0.0-rc.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.0",
     "babel-preset-toolkit": "0.0.18",
