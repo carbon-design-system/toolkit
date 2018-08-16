@@ -1,6 +1,5 @@
 {
   "name": "@carbon/cli-plugin-eslint",
-  "private": true,
   "version": "0.0.17",
   "main": "index.js",
   "license": "Apache-2.0",
