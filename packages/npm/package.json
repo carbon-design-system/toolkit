@@ -11,5 +11,8 @@
   "dependencies": {
     "@carbon/cli-tools": "0.0.18",
     "fs-extra": "^7.0.0"
+  },
+  "devDependencies": {
+    "memfs": "^2.9.4"
   }
 }

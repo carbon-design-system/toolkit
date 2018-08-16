@@ -94,6 +94,9 @@ async function createClient(npmClient, cwd) {
     runCommand,
     saveFlag,
     saveDevFlag,
+
+    // Workspce-related flags
+    isWorkspaceRoot,
   };
 }
 
