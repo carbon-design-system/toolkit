@@ -5,6 +5,6 @@ RUN mkdir -p /toolkit
 WORKDIR /toolkit
 
 COPY . .
-RUN yarn
+RUN yarn install --offline
 
 CMD ["/toolkit/e2e/test.sh"]

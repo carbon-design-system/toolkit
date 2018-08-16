@@ -61,6 +61,9 @@ fixtures_path=$PWD/e2e/fixtures
 
 export root_path
 
+# tmp_registry_log=`mktemp`
+# nohup npx verdaccio@3.2.0 -c e2e/verdaccio.yml &>$tmp_registry_log &
+
 # Verify local registry has started
 /bin/bash ./e2e/wait-for-it.sh "$custom_registry"
 
@@ -69,7 +72,7 @@ npm set registry "$custom_registry_url"
 yarn config set registry "$custom_registry_url"
 
 # Login so we can publish packages
-npx npm-cli-login@0.0.10 -u user -p password -e user@example.com -r "$custom_registry_url" --quotes
+(cd && npx npm-auth-to-token@1.0.0 -u user -p password -e user@example.com -r "$custom_registry_url")
 
 # Publish the monorepo
 ./node_modules/.bin/lerna publish \
