@@ -11,24 +11,35 @@ module.exports = ({ api, env, options }) => {
     ...defaultConfig,
     ...options,
   };
+  const logger = api.createLogger();
 
   api.addCommand({
     name: 'lint <dir>',
     description: 'Lint your application files',
     allowUnknownOption: true,
     async action(dir, cmd) {
-      // eslint-disable-next-line no-console
-      console.log('Linting:', dir, 'with:', cmd);
-      // eslint-disable-next-line no-console
-      console.log(path.resolve(dir));
+      logger.trace(
+        'Running lint command on:',
+        path.resolve(dir),
+        'with options:',
+        cmd
+      );
+
+      const eslint = await api.which('eslint', {
+        cwd: __dirname,
+      });
+
+      await api.spawn(eslint, [dir], {
+        stdio: 'inherit',
+      });
     },
   });
 
-  api.add(({ extendPackageJson, write }) =>
-    Promise.all([
+  api.add(({ extendPackageJson, write }) => {
+    return Promise.all([
       extendPackageJson(({ cliPath }) => ({
         scripts: {
-          eslint: `${cliPath} lint .`,
+          lint: `${cliPath} lint .`,
         },
         eslintConfig,
       })),
@@ -36,6 +47,6 @@ module.exports = ({ api, env, options }) => {
         '.eslintignore',
         ['cjs', 'es', 'lib', 'node_modules', 'umd'].join('\n')
       ),
-    ])
-  );
+    ]);
+  });
 };
