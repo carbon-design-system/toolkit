@@ -25,14 +25,17 @@ async function createClient(npmClient, cwd) {
     return fs.readJson(packageJsonPath);
   }
 
-  const packageJson = await readPackageJson();
   let isWorkspaceRoot = false;
 
-  if (packageJson.workspaces) {
-    if (Array.isArray(packageJson.workspaces)) {
-      isWorkspaceRoot = true;
-    } else if (Array.isArray(packageJson.workspaces.packages)) {
-      isWorkspaceRoot = true;
+  if (await fs.pathExists(packageJsonPath)) {
+    const packageJson = await readPackageJson();
+
+    if (packageJson.workspaces) {
+      if (Array.isArray(packageJson.workspaces)) {
+        isWorkspaceRoot = true;
+      } else if (Array.isArray(packageJson.workspaces.packages)) {
+        isWorkspaceRoot = true;
+      }
     }
   }
 
