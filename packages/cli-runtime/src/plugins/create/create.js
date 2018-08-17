@@ -13,7 +13,7 @@ const { getPlugins } = require('../tools/prompt');
 const logger = createLogger('@carbon/cli-plugin-create');
 const which = util.promisify(npmWhich);
 
-async function create(name, cmd, env) {
+async function create(name, cmd, api, env) {
   const { cwd, npmClient } = env;
   const { link, linkCli, plugins = [] } = cmd;
   const root = path.join(cwd, name);
@@ -69,14 +69,14 @@ async function create(name, cmd, env) {
   console.log('We have a couple of questions to help get you started');
   console.log();
 
-  const answers = await getPlugins();
+  const answers = await getPlugins(api.prompt);
 
   if (answers.plugins.length === 0) {
     displaySuccess(root, name);
     return;
   }
 
-  const args = ['add', ...plugins, link && '--link'].filter(Boolean);
+  const args = ['add', ...answers.plugins, link && '--link'].filter(Boolean);
   await spawn(toolkit, args, {
     cwd: root,
     stdio: 'inherit',

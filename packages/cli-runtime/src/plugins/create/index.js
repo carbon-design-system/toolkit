@@ -36,7 +36,7 @@ module.exports = async ({ api, env }) => {
       },
     ],
     action(name, cmd) {
-      return create(name, cmd, env);
+      return create(name, cmd, api, env);
     },
   });
 };
