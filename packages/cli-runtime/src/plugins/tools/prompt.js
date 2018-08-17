@@ -17,6 +17,16 @@ const plugins = [
     description: 'Setup prettier to format files in your codebase',
   },
   {
+    name: 'eslint',
+    pkg: '@carbon/cli-plugin-eslint',
+    description: 'Setup eslint for your project',
+  },
+  {
+    name: 'stylelint',
+    pkg: '@carbon/cli-plugin-stylelint',
+    description: 'Setup eslint for your project',
+  },
+  {
     name: 'jest',
     pkg: '@carbon/cli-plugin-jest',
     description: 'Setup Jest in a project',
@@ -25,6 +35,16 @@ const plugins = [
     name: 'enzyme',
     pkg: '@carbon/cli-plugin-enzyme',
     description: 'Setup enzyme for a React-based project using jest',
+  },
+  {
+    name: 'github-files',
+    pkg: '@carbon/cli-plugin-github-files',
+    description: 'Helps setup multiple issue templates for your project',
+  },
+  {
+    name: 'editorconfig',
+    pkg: '@carbon/cli-plugin-editorconfig',
+    description: 'Setup an editorconfig file for your project',
   },
 ];
 
