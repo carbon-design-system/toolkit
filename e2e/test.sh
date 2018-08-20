@@ -84,4 +84,4 @@ export TOOLKIT_CLI_ENV=test
 
 for script in ./e2e/tests/*; do
   /bin/bash $script
-done
+done || exit 1

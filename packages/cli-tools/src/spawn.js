@@ -38,4 +38,6 @@ function spawnAsync(command, args, options) {
   });
 }
 
+spawnAsync.sync = spawn.sync;
+
 module.exports = spawnAsync;

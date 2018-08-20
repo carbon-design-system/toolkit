@@ -9,9 +9,9 @@ const { loadPlugins: defaultLoadPlugins } = require('./plugins');
  * @param {Function} resolve
  * @returns {Array<Preset>}
  */
-async function loadPresets(descriptors, resolve) {
-  const presets = await Promise.all(
-    descriptors.map(descriptor => loadPreset(descriptor, resolve))
+function loadPresets(descriptors, resolve) {
+  const presets = descriptors.map(descriptor =>
+    loadPreset(descriptor, resolve)
   );
   const errors = presets.filter(preset => preset.error).map(preset => ({
     name: preset.name,
@@ -41,14 +41,10 @@ async function loadPresets(descriptors, resolve) {
  * @param {Function} resolve
  * @returns {Plugin}
  */
-async function loadPreset(
-  descriptor,
-  resolve,
-  loadPlugins = defaultLoadPlugins
-) {
+function loadPreset(descriptor, resolve, loadPlugins = defaultLoadPlugins) {
   const config = Array.isArray(descriptor) ? descriptor : [descriptor];
   const [name, options = {}] = config;
-  const { error: resolveError, module: getPreset } = await resolve(name);
+  const { error: resolveError, module: getPreset } = resolve(name);
 
   if (resolveError) {
     return {
@@ -70,7 +66,7 @@ async function loadPreset(
   }
 
   const { plugins: descriptors } = preset;
-  const { error: loadPluginsError, plugins } = await loadPlugins(
+  const { error: loadPluginsError, plugins } = loadPlugins(
     descriptors,
     resolve
   );

@@ -7,9 +7,9 @@
  * @param {Function} resolve
  * @returns {Array<Plugin>}
  */
-async function loadPlugins(descriptors, resolve) {
-  const plugins = await Promise.all(
-    descriptors.map(descriptor => loadPlugin(descriptor, resolve))
+function loadPlugins(descriptors, resolve) {
+  const plugins = descriptors.map(descriptor =>
+    loadPlugin(descriptor, resolve)
   );
   const errors = plugins.filter(plugin => plugin.error).map(plugin => ({
     name: plugin.name,
@@ -39,10 +39,10 @@ async function loadPlugins(descriptors, resolve) {
  * @param {Function} resolve
  * @returns {Plugin}
  */
-async function loadPlugin(descriptor, resolve) {
+function loadPlugin(descriptor, resolve) {
   const config = Array.isArray(descriptor) ? descriptor : [descriptor];
   const [name, options = {}] = config;
-  const { error, module: plugin } = await resolve(name);
+  const { error, module: plugin } = resolve(name);
 
   return {
     error,

@@ -3,15 +3,15 @@
 const path = require('path');
 
 const defaultConfig = {
-  extends: ['eslint-config-toolkit'],
+  extends: [require.resolve('eslint-config-toolkit')],
 };
 
 module.exports = ({ api, options }) => {
-  const eslintConfig = {
-    ...defaultConfig,
-    ...options,
-  };
+  const eslintConfig =
+    Object.keys(options).length === 0 ? defaultConfig : options;
   const logger = api.createLogger();
+
+  api.extend('eslint', () => eslintConfig);
 
   api.addCommand({
     name: 'lint <dir>',
@@ -41,7 +41,9 @@ module.exports = ({ api, options }) => {
         scripts: {
           lint: `${cliPath} lint .`,
         },
-        eslintConfig,
+        eslintConfig: {
+          extends: ['@carbon/cli-plugin-eslint/config'],
+        },
       })),
       write(
         '.eslintignore',

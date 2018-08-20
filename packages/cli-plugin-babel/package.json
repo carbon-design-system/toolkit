@@ -9,6 +9,10 @@
     "access": "public"
   },
   "dependencies": {
+    "@carbon/cli-runtime": "0.0.21",
     "babel-preset-toolkit": "0.0.21"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-rc.1"
   }
 }

@@ -7,6 +7,7 @@ const {
 const { getClient: defaultGetClient } = require('@carbon/npm');
 const { logger } = require('./logger');
 const { Store, create } = require('./api');
+const applyPlugins = require('./applyPlugins');
 
 const defaultPlugins = [
   {
@@ -26,7 +27,7 @@ const defaultPlugins = [
   },
 ];
 
-async function load({
+function load({
   cwd = process.cwd(),
   name = 'toolkit',
   getClient = defaultGetClient,
@@ -41,13 +42,13 @@ async function load({
   const env = {
     CLI_ENV,
     cwd,
-    npmClient: await getClient(cwd),
+    npmClient: getClient.sync(cwd),
   };
   const api = create({ env, store });
 
-  await applyPlugins(defaultPlugins, api, env);
+  applyPlugins(api, defaultPlugins, env);
 
-  const { error: loadConfigError, config, isEmpty } = await loadConfig({
+  const { error: loadConfigError, config, isEmpty } = loadConfig({
     cwd,
     loader,
     name,
@@ -68,26 +69,14 @@ async function load({
     };
   }
 
-  await applyPlugins(config.plugins, api, env);
+  applyPlugins(api, config.plugins, env);
 
   return {
     api,
     config,
     env,
     name,
-    store,
   };
-}
-
-async function applyPlugins(plugins, api, env) {
-  for (const { name, plugin, options } of plugins) {
-    logger.trace(`Applying plugin: ${name}`);
-    await plugin({
-      api: api.fork(name),
-      options,
-      env,
-    });
-  }
 }
 
 module.exports = load;

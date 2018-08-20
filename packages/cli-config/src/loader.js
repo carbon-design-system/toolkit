@@ -14,12 +14,12 @@ const cosmiconfig = require('cosmiconfig');
  * @param {string} cwd The current directory of the process
  * @returns LoaderResult
  */
-async function loader(name, cwd = process.cwd()) {
+function loader(name, cwd = process.cwd()) {
   const options = {
     searchPlaces: ['package.json'],
     stopDir: cwd,
   };
-  const result = await cosmiconfig(name, options).search(cwd);
+  const result = cosmiconfig(name, options).searchSync(cwd);
   if (result === null) {
     return { isEmpty: true };
   }

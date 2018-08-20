@@ -1,7 +1,7 @@
 'use strict';
 
 const defaultBabelConfig = {
-  presets: [require.resolve('babel-preset-carbon')],
+  presets: [require.resolve('babel-preset-toolkit')],
 };
 
 module.exports = ({ api, options }) => {
@@ -10,5 +10,13 @@ module.exports = ({ api, options }) => {
       return options;
     }
     return defaultBabelConfig;
+  });
+
+  api.add(async ({ extendPackageJson, write }) => {
+    await extendPackageJson(() => ({
+      babel: {
+        presets: ['@carbon/cli-plugin-babel/config'],
+      },
+    }));
   });
 };

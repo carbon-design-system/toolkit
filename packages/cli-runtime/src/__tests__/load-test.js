@@ -32,8 +32,8 @@ describe('load', () => {
       load = require('../load');
     });
 
-    it('should not report an error if no config is found', async () => {
-      const { error } = await load({ cwd: '/project' });
+    it('should not report an error if no config is found', () => {
+      const { error } = load({ cwd: '/project' });
       expect(error).not.toBeDefined();
     });
   });
@@ -69,8 +69,8 @@ describe('load', () => {
       load = require('../load');
     });
 
-    it('should load a config with plugins', async () => {
-      const { error, config } = await load({
+    it('should load a config with plugins', () => {
+      const { error, config } = load({
         cwd: '/plugins',
         resolve() {
           return { module: jest.fn() };
@@ -82,8 +82,8 @@ describe('load', () => {
       );
     });
 
-    it('should load a config with presets', async () => {
-      const { error, config } = await load({
+    it('should load a config with presets', () => {
+      const { error, config } = load({
         cwd: '/presets',
         resolve(name) {
           // Presets
@@ -137,8 +137,8 @@ describe('load', () => {
       load = require('../load');
     });
 
-    it('should return a validation error if config is malformed', async () => {
-      const { error } = await load({ cwd: '/project' });
+    it('should return a validation error if config is malformed', () => {
+      const { error } = load({ cwd: '/project' });
       expect(error).toBeDefined();
     });
   });

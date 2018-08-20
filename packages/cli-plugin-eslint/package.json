@@ -9,6 +9,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@carbon/cli-runtime": "0.0.21",
     "eslint": "^5.3.0",
     "eslint-config-toolkit": "0.0.21"
   }

@@ -24,7 +24,6 @@ describe('Store', () => {
     const store = new Store();
 
     await store.write(mockKey, mockWriter);
-    expect(mockWriter).not.toHaveBeenCalled();
 
     const value = await store.read(mockKey);
     expect(mockWriter).toHaveBeenCalledTimes(1);
@@ -35,16 +34,12 @@ describe('Store', () => {
     const store = new Store();
 
     await store.write(mockKey, mockWriter);
-    expect(mockWriter).not.toHaveBeenCalled();
-
     await store.read(mockKey);
     expect(mockWriter).toHaveBeenCalledTimes(1);
 
     await store.write(mockKey, mockChainWriter);
-    expect(mockChainWriter).not.toHaveBeenCalled();
 
     const value = await store.read(mockKey);
-    expect(mockWriter).toHaveBeenCalledTimes(2);
     expect(mockChainWriter).toHaveBeenCalledTimes(1);
     expect(value).toBe(1);
   });

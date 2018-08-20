@@ -22,7 +22,7 @@ describe('preset', () => {
       'should-resolve-b',
       ['should-resolve-c', { foo: 'bar' }],
     ];
-    mockResolvePlugins = jest.fn(async descriptors => {
+    mockResolvePlugins = jest.fn(descriptors => {
       const plugins = descriptors.map(descriptor => {
         const [name] = descriptor;
         if (name.includes('should-resolve')) {
@@ -34,7 +34,7 @@ describe('preset', () => {
         plugins,
       };
     });
-    mockResolvePreset = jest.fn(async name => {
+    mockResolvePreset = jest.fn(name => {
       if (name.includes('should-resolve')) {
         return {
           module: () => ({
@@ -47,8 +47,8 @@ describe('preset', () => {
   });
 
   describe('loadPreset', () => {
-    it('should return an array of plugins for a string descriptor', async () => {
-      const { error, plugins } = await loadPreset(
+    it('should return an array of plugins for a string descriptor', () => {
+      const { error, plugins } = loadPreset(
         'should-resolve-a',
         mockResolvePreset,
         mockResolvePlugins

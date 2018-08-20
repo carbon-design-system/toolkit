@@ -28,4 +28,30 @@ async function getClient(root) {
   return 'npm';
 }
 
+function getClientSync(root) {
+  const yarnLockfile = path.join(root, 'yarn.lock');
+  if (fs.pathExistsSync(yarnLockfile)) {
+    return 'yarn';
+  }
+
+  const npmLockfile = path.join(root, 'package-lock.json');
+  if (fs.pathExistsSync(npmLockfile)) {
+    return 'npm';
+  }
+
+  try {
+    spawn.sync('yarn', ['--version'], { cwd: root, stdio: 'ignore' });
+    return 'yarn';
+  } catch (error) {}
+
+  try {
+    spawn.sync('npm', ['--version'], { cwd: root });
+    return 'npm';
+  } catch (error) {}
+
+  return 'npm';
+}
+
+getClient.sync = getClientSync;
+
 module.exports = getClient;

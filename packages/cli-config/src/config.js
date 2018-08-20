@@ -6,17 +6,14 @@ const { loadPlugins } = require('./plugins');
 const defaultResolve = require('./resolve');
 const { validate: defaultValidate } = require('./validation/config');
 
-async function loadConfig({
+function loadConfig({
   cwd = process.cwd(),
   name = 'toolkit',
   loader = defaultLoader,
   resolve = defaultResolve,
   validate = defaultValidate,
 }) {
-  const { error: loaderError, isEmpty, config: rawConfig } = await loader(
-    name,
-    cwd
-  );
+  const { error: loaderError, isEmpty, config: rawConfig } = loader(name, cwd);
   if (loaderError) {
     return {
       error: loaderError,
@@ -36,7 +33,7 @@ async function loadConfig({
     };
   }
 
-  const { error: loadPresetsError, presets } = await loadPresets(
+  const { error: loadPresetsError, presets } = loadPresets(
     value.presets,
     resolve
   );
@@ -47,7 +44,7 @@ async function loadConfig({
     };
   }
 
-  const { error: loadPluginsError, plugins } = await loadPlugins(
+  const { error: loadPluginsError, plugins } = loadPlugins(
     value.plugins,
     resolve
   );
