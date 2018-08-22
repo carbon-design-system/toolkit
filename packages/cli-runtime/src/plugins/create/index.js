@@ -9,7 +9,7 @@ function list(value) {
   return value.split(',');
 }
 
-module.exports = async ({ api, env }) => {
+module.exports = ({ api, env }) => {
   api.addCommand({
     name: 'create <project-name>',
     description: 'create a new project',
@@ -22,7 +22,7 @@ module.exports = async ({ api, env }) => {
       {
         flags: '--npm-client [client]',
         description: 'specify an npm client to use [npm, yarn]',
-        defaults: await getClient(env.cwd),
+        defaults: getClient.sync(env.cwd),
       },
       {
         flags: '--link',

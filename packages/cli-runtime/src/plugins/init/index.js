@@ -5,7 +5,7 @@
 const { getClient } = require('@carbon/npm');
 const init = require('./init');
 
-module.exports = async ({ api, env }) => {
+module.exports = ({ api, env }) => {
   api.addCommand({
     name: 'init',
     description: 'initialize the toolkit in the current directory',
@@ -23,7 +23,7 @@ module.exports = async ({ api, env }) => {
       {
         flags: '--npm-client [client]',
         description: 'specify an npm client to use [npm, yarn]',
-        defaults: await getClient(env.cwd),
+        defaults: getClient.sync(env.cwd),
       },
       {
         flags: '--skip',
