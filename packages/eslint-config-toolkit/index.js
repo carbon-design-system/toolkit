@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = {
-  extends: ['eslint-config-toolkit-base'],
+  root: true,
+  extends: [require.resolve('eslint-config-toolkit-base')],
 };
