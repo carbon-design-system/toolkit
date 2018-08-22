@@ -2,7 +2,7 @@ version: '3'
 
 services:
   verdaccio:
-    image: verdaccio/verdaccio:latest
+    image: verdaccio/verdaccio:3.6.0
     ports:
       - "4873:4873"
     volumes:

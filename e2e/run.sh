@@ -28,18 +28,13 @@ function handle_exit {
   exit
 }
 
-# Check for the existence of one or more files.
-function exists {
-  for f in $*; do
-    test -e "$f"
-  done
-}
-
 # Exit the script with a helpful error message when any error is encountered
 trap 'set +x; handle_error $LINENO $BASH_COMMAND' ERR
 
 # Cleanup before exit on any termination signal
 trap 'set +x; handle_exit' SIGQUIT SIGTERM SIGINT SIGKILL SIGHUP
+
+set -e;
 
 # Echo every command being executed
 set -x
@@ -57,7 +52,6 @@ cd "$(dirname "$0")"
 # Go to root
 cd ..
 root_path=$PWD
-fixtures_path=$PWD/e2e/fixtures
 
 export root_path
 
@@ -82,6 +76,23 @@ npx npm-auth-to-token@1.0.0 -u user -p password -e user@example.com -r "$custom_
 
 export TOOLKIT_CLI_ENV=test
 
-for script in ./e2e/tests/*; do
-  /bin/bash $script
-done || exit 1
+while [ "$1" != "" ]; do
+  case $1 in
+    "--test-suite")
+    shift
+    test_suite=$1
+    ;;
+  esac
+  shift
+done
+
+if [ "$test_suite" == "" ]
+then
+  scripts=(./e2e/tests/*)
+  for script in "${scripts[@]}"; do
+    # The exit status is 0 unless N is not greater than or equal to 1.
+    bash $script || break -1
+  done
+else
+  bash "./e2e/tests/$test_suite.sh" || exit 1
+fi
