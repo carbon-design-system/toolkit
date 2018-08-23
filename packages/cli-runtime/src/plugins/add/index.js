@@ -4,7 +4,8 @@ const add = require('./add');
 
 module.exports = ({ api, env }) => {
   api.addCommand({
-    name: 'add <plugin> [plugins...]',
+    // name: 'add <plugin|preset> [presets|plugins...]',
+    name: 'add [plugins|presets...]',
     description: 'add plugins to your project',
     options: [
       {
@@ -18,8 +19,8 @@ module.exports = ({ api, env }) => {
         development: true,
       },
     ],
-    action(plugin, plugins, cmd) {
-      return add(api, env, [plugin, ...plugins], cmd);
+    action(descriptors, cmd) {
+      return add(api, env, descriptors, cmd);
     },
   });
 };

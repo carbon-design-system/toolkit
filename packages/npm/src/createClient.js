@@ -8,7 +8,7 @@ const { linkDependency, unlinkDependency } = require('./link');
 
 const supportedClients = new Set(['npm', 'yarn']);
 
-async function createClient(npmClient, cwd) {
+function createClient(npmClient, cwd) {
   if (!supportedClients.has(npmClient)) {
     return {
       error: new Error(`Unrecognized npm client: \`${npmClient}\`.`),
@@ -27,8 +27,8 @@ async function createClient(npmClient, cwd) {
 
   let isWorkspaceRoot = false;
 
-  if (await fs.pathExists(packageJsonPath)) {
-    const packageJson = await readPackageJson();
+  if (fs.pathExistsSync(packageJsonPath)) {
+    const packageJson = fs.readJsonSync(packageJsonPath);
 
     if (packageJson.workspaces) {
       if (Array.isArray(packageJson.workspaces)) {

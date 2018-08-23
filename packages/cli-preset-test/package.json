@@ -1,0 +1,15 @@
+{
+  "name": "@carbon/cli-preset-test",
+  "version": "0.0.22",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-preset-test-react",
+  "bugs": "https://github.com/carbon-design-system/toolkit/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@carbon/cli-plugin-enzyme": "0.0.22",
+    "@carbon/cli-plugin-jest": "0.0.22"
+  }
+}

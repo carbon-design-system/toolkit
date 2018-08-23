@@ -69,6 +69,14 @@ function load({
     };
   }
 
+  if (Array.isArray(config.presets) && config.presets.length > 0) {
+    const plugins = config.presets.reduce(
+      (acc, preset) => acc.concat(preset.plugins),
+      []
+    );
+    applyPlugins(api, plugins, env);
+  }
+
   applyPlugins(api, config.plugins, env);
 
   return {

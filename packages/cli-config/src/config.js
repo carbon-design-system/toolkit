@@ -57,9 +57,8 @@ function loadConfig({
 
   return {
     config: {
-      plugins: presets
-        .reduce((acc, preset) => acc.concat(preset.plugins), [])
-        .concat(plugins),
+      presets,
+      plugins,
     },
   };
 }
