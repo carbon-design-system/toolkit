@@ -37,7 +37,10 @@ createClient.mock.installDependencies = [];
 createClient.mock.installDevDependencies = [];
 createClient.mock.linkDependencies = [];
 
+const getClient = jest.fn(() => Promise.resolve('npm'));
+getClient.sync = () => 'npm';
+
 module.exports = {
-  getClient: jest.fn(() => Promise.resolve('npm')),
+  getClient,
   createClient,
 };

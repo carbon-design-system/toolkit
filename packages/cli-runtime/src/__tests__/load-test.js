@@ -109,8 +109,7 @@ describe('load', () => {
         },
       });
       expect(error).not.toBeDefined();
-      // Resolved with plugins a, b, c, d from above
-      expect(config.plugins.length).toBe(4);
+      expect(config.presets.length).toBe(2);
     });
   });
 

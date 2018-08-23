@@ -21,7 +21,6 @@ async function add(api, env, descriptors, cmd) {
     writePackageJson,
     linkDependencies,
     installDependencies,
-    installDevDependencies,
   } = npmClient;
   if (error) {
     throw error;
@@ -67,7 +66,7 @@ async function add(api, env, descriptors, cmd) {
     return acc;
   }, {});
 
-  for (const { name, version } of presets) {
+  for (const { name } of presets) {
     invariant(
       !config.presets.find(preset => preset.name === name),
       'Preset `%s` has already been added to your config in: %s',
@@ -75,7 +74,7 @@ async function add(api, env, descriptors, cmd) {
       env.cwd
     );
   }
-  for (const { name, version } of plugins) {
+  for (const { name } of plugins) {
     invariant(
       !config.plugins.find(plugin => plugin.name === name),
       'Plugin `%s` has already been added to your config in: %s',
@@ -91,7 +90,7 @@ async function add(api, env, descriptors, cmd) {
 
   await installer(packageNames);
 
-  for (const { name, version } of presets) {
+  for (const { name } of presets) {
     invariant(
       !config.presets.find(preset => preset.name === name),
       'Preset `%s` has already been added to your config in: %s',
@@ -109,11 +108,10 @@ async function add(api, env, descriptors, cmd) {
       },
     });
 
-    const {
-      error: loadPresetError,
-      options,
-      plugins: presetPlugins,
-    } = await loadPreset(name, resolve);
+    const { error: loadPresetError, plugins: presetPlugins } = await loadPreset(
+      name,
+      resolve
+    );
     if (loadPresetError) {
       throw loadPresetError;
     }
@@ -157,7 +155,7 @@ async function addPlugins(
   cmd,
   env
 ) {
-  for (const { name, version } of plugins) {
+  for (const { name } of plugins) {
     invariant(
       !config.plugins.find(plugin => plugin.name === name),
       'Plugin `%s` has already been added to your config in: %s',
@@ -173,7 +171,7 @@ async function addPlugins(
     })
   );
 
-  for (const { name, version } of plugins) {
+  for (const { name } of plugins) {
     const { error: loadPluginError, options, plugin } = await loadPlugin(
       name,
       resolve
