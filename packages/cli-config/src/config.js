@@ -1,74 +1,48 @@
 'use strict';
 
-const { loader: defaultLoader } = require('./loader');
-const { loadPresets } = require('./presets');
-const { loadPlugins } = require('./plugins');
-const defaultResolve = require('./resolve');
-const { validate: defaultValidate } = require('./validation/config');
+const search = require('./search');
+const { loadConfig } = require('./load');
+const { relativeLoader } = require('./loader');
+const normalize = require('./normalize');
+const { validate } = require('./validate/config');
 
-function loadConfig({
-  cwd = process.cwd(),
-  name = 'toolkit',
-  loader = defaultLoader,
-  resolve = defaultResolve,
-  validate = defaultValidate,
-}) {
-  const { error: loaderError, isEmpty, config: rawConfig } = loader(name, cwd);
-  if (loaderError) {
+function load({ name, cwd = process.cwd() }) {
+  const { noConfig, isEmpty, config: rawConfig, filepath } = search(name, cwd);
+  if (noConfig || isEmpty) {
     return {
-      error: loaderError,
-    };
-  }
-
-  if (isEmpty) {
-    return {
+      noConfig,
       isEmpty,
     };
   }
 
-  const { error: validationError, value } = validate(normalize(rawConfig));
+  const { error: validationError, value } = validate({
+    presets: [],
+    plugins: [],
+    ...rawConfig,
+  });
   if (validationError) {
     return {
       error: validationError,
     };
   }
 
-  const { error: loadPresetsError, presets } = loadPresets(
-    value.presets,
-    resolve
-  );
-
-  if (loadPresetsError) {
+  const { errors, plugins } = normalize(loadConfig(value, relativeLoader(cwd)));
+  if (errors) {
     return {
-      error: loadPresetsError,
-    };
-  }
-
-  const { error: loadPluginsError, plugins } = loadPlugins(
-    value.plugins,
-    resolve
-  );
-
-  if (loadPluginsError) {
-    return {
-      error: loadPluginsError,
+      error: new Error(
+        'Error loading plugins for the following reasons:\n\t' +
+          errors.map(error => error.message).join('\n\t')
+      ),
     };
   }
 
   return {
-    config: {
-      presets,
-      plugins,
-    },
+    config: rawConfig,
+    filepath,
+    plugins,
   };
 }
 
-function normalize(config) {
-  return {
-    presets: [],
-    plugins: [],
-    ...config,
-  };
-}
-
-module.exports = loadConfig;
+module.exports = {
+  load,
+};

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`load should load the definition for a plugin 1`] = `
+Object {
+  "plugins": Array [
+    Object {
+      "name": "cli-plugin-x",
+      "options": Object {},
+      "plugin": [MockFunction],
+    },
+  ],
+  "presets": Array [],
+}
+`;
+
+exports[`load should load the definition for a preset 1`] = `
+Object {
+  "plugins": Array [],
+  "presets": Array [
+    Object {
+      "name": "cli-preset-b",
+      "options": Object {},
+      "plugins": Array [],
+      "presets": Array [
+        Object {
+          "name": "cli-preset-a",
+          "options": Object {},
+          "plugins": Array [
+            Object {
+              "name": "cli-plugin-x",
+              "options": Object {},
+              "plugin": [MockFunction],
+            },
+            Object {
+              "name": "cli-plugin-y",
+              "options": Object {},
+              "plugin": [MockFunction],
+            },
+            Object {
+              "name": "cli-plugin-z",
+              "options": Object {},
+              "plugin": [MockFunction],
+            },
+          ],
+          "presets": Array [],
+        },
+      ],
+    },
+  ],
+}
+`;

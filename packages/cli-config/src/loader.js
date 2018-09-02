@@ -1,37 +1,43 @@
 'use strict';
 
-const cosmiconfig = require('cosmiconfig');
+const path = require('path');
+const cwd = process.cwd();
 
-/**
- * @typedef LoaderResult
- * @property {Error} error
- * @property {boolean} isEmpty
- * @property {Object} config
- */
-
-/**
- * @param {string} name The name of your module
- * @param {string} cwd The current directory of the process
- * @returns LoaderResult
- */
-function loader(name, cwd = process.cwd()) {
-  const options = {
-    searchPlaces: ['package.json'],
-    stopDir: cwd,
+function relativeLoader(cwd) {
+  return descriptor => {
+    if (isPathString(descriptor)) {
+      return loader(path.resolve(cwd, descriptor));
+    }
+    return loader(descriptor);
   };
-  const result = cosmiconfig(name, options).searchSync(cwd);
-  if (result === null) {
-    return { isEmpty: true };
+}
+
+function loader(descriptor) {
+  if (isPathString(descriptor)) {
+    const source = path.resolve(descriptor);
+    return safeRequire(source);
   }
+  if (typeof descriptor === 'string') {
+    return safeRequire(descriptor);
+  }
+  // Fall-through case is if we have already been provided the module
+  return { module: descriptor };
+}
 
-  const { config, filepath, isEmpty } = result;
-  return {
-    config,
-    filepath,
-    isEmpty,
-  };
+function isPathString(string) {
+  return string[0] === '.' || string[0] === '/';
+}
+
+function safeRequire(source) {
+  try {
+    // eslint-disable-next-line import/no-dynamic-require
+    return { module: require(source) };
+  } catch (error) {
+    return { error };
+  }
 }
 
 module.exports = {
   loader,
+  relativeLoader,
 };

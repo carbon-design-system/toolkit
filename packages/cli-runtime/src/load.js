@@ -1,8 +1,9 @@
 'use strict';
 
 const {
-  loadConfig: defaultLoadConfig,
-  resolve: defaultResolve,
+  // loadConfig: defaultLoadConfig,
+  // resolve: defaultResolve,
+  Config,
 } = require('@carbon/cli-config');
 const { getClient: defaultGetClient } = require('@carbon/npm');
 const { logger } = require('./logger');
@@ -31,9 +32,6 @@ function load({
   cwd = process.cwd(),
   name = 'toolkit',
   getClient = defaultGetClient,
-  loadConfig = defaultLoadConfig,
-  loader,
-  resolve = defaultResolve,
 } = {}) {
   logger.trace('Loading runtime configuration');
 
@@ -45,14 +43,9 @@ function load({
     npmClient: getClient.sync(cwd),
   };
   const api = create({ env, store });
-
-  applyPlugins(api, defaultPlugins, env);
-
-  const { error: loadConfigError, config, isEmpty } = loadConfig({
+  const { error: loadConfigError, plugins, isEmpty, noConfig } = Config.load({
     cwd,
-    loader,
     name,
-    resolve,
   });
   if (loadConfigError) {
     return {
@@ -60,7 +53,9 @@ function load({
     };
   }
 
-  if (isEmpty) {
+  applyPlugins(api, defaultPlugins, env);
+
+  if (noConfig || isEmpty) {
     return {
       api,
       env,
@@ -69,21 +64,13 @@ function load({
     };
   }
 
-  if (Array.isArray(config.presets) && config.presets.length > 0) {
-    const plugins = config.presets.reduce(
-      (acc, preset) => acc.concat(preset.plugins),
-      []
-    );
-    applyPlugins(api, plugins, env);
-  }
-
-  applyPlugins(api, config.plugins, env);
+  applyPlugins(api, plugins, env);
 
   return {
     api,
-    config,
     env,
     name,
+    plugins,
   };
 }
 
