@@ -44,7 +44,7 @@ function loadPreset(descriptor, loader) {
 
   if (loaderError) {
     return {
-      loaderError,
+      error: loaderError,
       name,
     };
   }
