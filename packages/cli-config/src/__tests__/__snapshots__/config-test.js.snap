@@ -2,9 +2,9 @@
 
 exports[`config load with config should return the config and plugins to load 1`] = `
 Object {
-  "plugins": Array [
-    "../modules/a.js",
-  ],
+  "all": [Function],
+  "has": [Function],
+  "why": [Function],
 }
 `;
 
@@ -13,7 +13,11 @@ Array [
   Object {
     "name": "../modules/a.js",
     "options": Object {},
+    "owner": Object {
+      "root": true,
+    },
     "plugin": [Function],
+    "type": "plugin",
   },
 ]
 `;

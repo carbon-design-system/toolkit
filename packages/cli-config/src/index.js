@@ -1,7 +1,7 @@
 'use strict';
 
 const Config = require('./config');
-const { loadConfig, loadPlugin } = require('./load');
+const { loadConfig, loadPlugin, loadPreset } = require('./load');
 const { loader: defaultLoader, relativeLoader } = require('./loader');
 
 module.exports = {
@@ -10,4 +10,5 @@ module.exports = {
   relativeLoader,
   loadConfig,
   loadPlugin,
+  loadPreset,
 };

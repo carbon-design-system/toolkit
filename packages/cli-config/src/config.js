@@ -26,20 +26,50 @@ function load({ name, cwd = process.cwd() }) {
     };
   }
 
-  const { errors, plugins } = normalize(loadConfig(value, relativeLoader(cwd)));
-  if (errors) {
+  const { error: normalizeError, modules, plugins } = normalize(
+    loadConfig(value, relativeLoader(cwd))
+  );
+  if (normalizeError) {
     return {
-      error: new Error(
-        'Error loading plugins for the following reasons:\n\t' +
-          errors.map(error => error.message).join('\n\t')
-      ),
+      error: normalizeError,
     };
   }
 
   return {
-    config: rawConfig,
+    config: createConfig(modules),
     filepath,
     plugins,
+  };
+}
+
+function createConfig(modules) {
+  const all = () => modules;
+  const has = pluginOrPreset => {
+    return !!modules[pluginOrPreset];
+  };
+  const why = pluginOrPreset => {
+    if (!has(pluginOrPreset)) {
+      return {
+        available: false,
+        message: 'Plugin or preset not found in loaded modules',
+      };
+    }
+
+    let node = modules[pluginOrPreset];
+    while (!node.owner.root) {
+      node = node.owner;
+    }
+
+    return {
+      available: true,
+      message: node.name,
+    };
+  };
+
+  return {
+    all,
+    has,
+    why,
   };
 }
 

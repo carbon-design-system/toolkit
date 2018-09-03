@@ -16,8 +16,8 @@ describe('normalize', () => {
       presets: [],
       plugins: [],
     };
-    const { errors, plugins } = normalize(config);
-    expect(errors).toBe(null);
+    const { error, plugins } = normalize(config);
+    expect(error).toBeFalsy();
     expect(plugins).toEqual([]);
   });
 
@@ -32,8 +32,8 @@ describe('normalize', () => {
         },
       ],
     };
-    const { errors, plugins } = normalize(config);
-    expect(errors).toBe(null);
+    const { error, plugins } = normalize(config);
+    expect(error).toBeFalsy();
     expect(plugins.map(({ name }) => name)).toEqual(['a']);
   });
 
@@ -53,8 +53,8 @@ describe('normalize', () => {
         },
       ],
     };
-    const { errors, plugins } = normalize(config);
-    expect(errors).toBe(null);
+    const { error, plugins } = normalize(config);
+    expect(error).toBeFalsy();
     expect(plugins.map(({ name }) => name)).toEqual(['a', 'b']);
   });
 
@@ -74,8 +74,8 @@ describe('normalize', () => {
         },
       ],
     };
-    const { errors, plugins } = normalize(config);
-    expect(errors.length).toBe(1);
+    const { error, plugins } = normalize(config);
+    expect(error).toBeTruthy();
   });
 
   test('with preset', () => {
@@ -106,8 +106,8 @@ describe('normalize', () => {
       ],
       plugins: [],
     };
-    const { errors, plugins } = normalize(config);
-    expect(errors).toBe(null);
+    const { error, plugins } = normalize(config);
+    expect(error).toBeFalsy();
     expect(plugins.map(({ name }) => name)).toEqual(['x', 'y', 'z']);
   });
 
@@ -155,8 +155,8 @@ describe('normalize', () => {
       ],
       plugins: [],
     };
-    const { errors, plugins } = normalize(config);
-    expect(errors).toBe(null);
+    const { error, plugins } = normalize(config);
+    expect(error).toBeFalsy();
     expect(plugins.map(({ name }) => name)).toEqual(['x', 'y', 'z']);
   });
 });

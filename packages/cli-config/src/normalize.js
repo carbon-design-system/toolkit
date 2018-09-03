@@ -22,37 +22,65 @@ function normalize(config) {
   const modules = {};
   const loadOrder = new Set();
 
-  for (const plugin of preorder(config)) {
-    if (loadOrder.has(plugin.name)) {
-      const error = new Error(
-        `Plugin ${plugin.name} has been defined multiple times in your config.`
-      );
-      errors.push(error);
-      break;
+  for (const node of preorder(config)) {
+    if (node.type === 'preset') {
+      modules[node.name] = node;
+      continue;
     }
 
-    loadOrder.add(plugin.name);
+    if (node.type === 'plugin') {
+      if (loadOrder.has(node.name)) {
+        const error = new Error(
+          `Plugin ${node.name} has been defined multiple times in your config.`
+        );
+        errors.push(error);
+        break;
+      }
 
-    if (plugin.error) {
-      errors.push(plugin);
+      loadOrder.add(node.name);
+
+      if (node.error) {
+        errors.push(node);
+      }
+
+      modules[node.name] = node;
     }
+  }
 
-    modules[plugin.name] = plugin;
+  if (errors.length > 0) {
+    const error = new Error(
+      'Error loading plugins for the following reasons:\n\t' +
+        errors.map(error => error.message).join('\n\t')
+    );
+    return {
+      error,
+    };
   }
 
   return {
-    errors: errors.length > 0 ? errors : null,
+    loadOrder,
+    modules,
     plugins: [...loadOrder].map(id => modules[id]),
   };
 }
 
-function* preorder(config) {
+function* preorder(config, owner = { root: true }) {
+  config.owner = owner;
   for (const preset of config.presets) {
-    yield* preorder(preset);
+    yield {
+      ...preset,
+      type: 'preset',
+      owner,
+    };
+    yield* preorder(preset, config);
   }
 
   for (const plugin of config.plugins) {
-    yield plugin;
+    yield {
+      ...plugin,
+      type: 'plugin',
+      owner,
+    };
   }
 }
 
