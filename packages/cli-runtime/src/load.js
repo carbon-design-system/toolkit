@@ -1,10 +1,6 @@
 'use strict';
 
-const {
-  // loadConfig: defaultLoadConfig,
-  // resolve: defaultResolve,
-  Config,
-} = require('@carbon/cli-config');
+const { Config } = require('@carbon/cli-config');
 const { getClient: defaultGetClient } = require('@carbon/npm');
 const { logger } = require('./logger');
 const { Store, create } = require('./api');

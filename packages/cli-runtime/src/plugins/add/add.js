@@ -1,10 +1,10 @@
 'use strict';
 
 const {
-  loadConfig,
+  Config,
   loadPlugin,
   loadPreset,
-  resolve,
+  relativeLoader,
 } = require('@carbon/cli-config');
 const { createClient, getPackageInfoFrom } = require('@carbon/npm');
 const invariant = require('invariant');
@@ -26,7 +26,11 @@ async function add(api, env, descriptors, cmd) {
     throw error;
   }
 
-  const { error: loadConfigError, config } = await loadConfig({ cwd: env.cwd });
+  // const { error: loadConfigError, config } = await loadConfig({ cwd: env.cwd });
+  const { error: loadConfigError, config } = await Config.load({
+    name: 'toolkit',
+    cwd: env.cwd,
+  });
   if (loadConfigError) {
     throw loadConfigError;
   }
@@ -34,6 +38,7 @@ async function add(api, env, descriptors, cmd) {
   if (!config) {
     throw new Error(`No configuration found for toolkit in: ${env.cwd}`);
   }
+
   const { presets = [], plugins = [] } = packages.reduce((acc, pkg) => {
     if (pkg.name.indexOf('plugin') !== -1) {
       if (Array.isArray(acc.plugins)) {
@@ -68,15 +73,16 @@ async function add(api, env, descriptors, cmd) {
 
   for (const { name } of presets) {
     invariant(
-      !config.presets.find(preset => preset.name === name),
+      !config.has(name),
       'Preset `%s` has already been added to your config in: %s',
       name,
       env.cwd
     );
   }
+
   for (const { name } of plugins) {
     invariant(
-      !config.plugins.find(plugin => plugin.name === name),
+      !config.has(name),
       'Plugin `%s` has already been added to your config in: %s',
       name,
       env.cwd
@@ -91,13 +97,6 @@ async function add(api, env, descriptors, cmd) {
   await installer(packageNames);
 
   for (const { name } of presets) {
-    invariant(
-      !config.presets.find(preset => preset.name === name),
-      'Preset `%s` has already been added to your config in: %s',
-      name,
-      env.cwd
-    );
-
     const projectPackageJson = await readPackageJson();
     await writePackageJson({
       ...projectPackageJson,
@@ -110,7 +109,7 @@ async function add(api, env, descriptors, cmd) {
 
     const { error: loadPresetError, plugins: presetPlugins } = await loadPreset(
       name,
-      resolve
+      relativeLoader(env.cwd)
     );
     if (loadPresetError) {
       throw loadPresetError;
@@ -155,15 +154,6 @@ async function addPlugins(
   cmd,
   env
 ) {
-  for (const { name } of plugins) {
-    invariant(
-      !config.plugins.find(plugin => plugin.name === name),
-      'Plugin `%s` has already been added to your config in: %s',
-      name,
-      env.cwd
-    );
-  }
-
   await installer(
     plugins.map(plugin => {
       const { name, version } = plugin;
@@ -174,7 +164,7 @@ async function addPlugins(
   for (const { name } of plugins) {
     const { error: loadPluginError, options, plugin } = await loadPlugin(
       name,
-      resolve
+      relativeLoader(env.cwd)
     );
     if (loadPluginError) {
       throw loadPluginError;
