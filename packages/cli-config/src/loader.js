@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const cwd = process.cwd();
 
 function relativeLoader(cwd) {
   return descriptor => {

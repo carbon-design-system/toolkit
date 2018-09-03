@@ -40,11 +40,11 @@ function loadPlugin(descriptor, loader) {
 function loadPreset(descriptor, loader) {
   const config = Array.isArray(descriptor) ? descriptor : [descriptor];
   const [name, options = {}] = config;
-  const { error, module: getPreset } = loader(name);
+  const { error: loaderError, module: getPreset } = loader(name);
 
-  if (error) {
+  if (loaderError) {
     return {
-      error,
+      loaderError,
       name,
     };
   }

@@ -74,7 +74,7 @@ describe('normalize', () => {
         },
       ],
     };
-    const { error, plugins } = normalize(config);
+    const { error } = normalize(config);
     expect(error).toBeTruthy();
   });
 

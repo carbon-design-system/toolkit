@@ -33,7 +33,7 @@ function normalize(config) {
         const error = new Error(
           `Plugin ${node.name} has been defined multiple times in your config.`
         );
-        errors.push(error);
+        errors.push({ error });
         break;
       }
 
