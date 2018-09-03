@@ -7,7 +7,7 @@ const url = require('url');
 // Inspired by Facebook's Create React App:
 // https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/config/paths.js
 module.exports = ({ api, env, options }) => {
-  api.extend('project.paths', () => {
+  api.extend('paths', () => {
     // Make sure any symlinks in the project folder are resolved:
     // https://github.com/facebookincubator/create-react-app/issues/637
     const appDirectory = fs.realpathSync(env.cwd);

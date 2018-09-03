@@ -61,8 +61,8 @@ module.exports = ({ api, options }) => {
     },
   });
 
-  api.add(async ({ extendPackageJson, installDevDependencies }) => {
-    await extendPackageJson(({ cliPath, packageJson }) => ({
+  api.add(async ({ extendPackageJson }) => {
+    await extendPackageJson(({ cliPath }) => ({
       scripts: {
         test: `${cliPath} test`,
       },

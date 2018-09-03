@@ -50,7 +50,7 @@ function normalize(config) {
   if (errors.length > 0) {
     const error = new Error(
       'Error loading plugins for the following reasons:\n\t' +
-        errors.map(error => error.message).join('\n\t')
+        errors.map(({ error }) => error.message).join('\n\t')
     );
     return {
       error,

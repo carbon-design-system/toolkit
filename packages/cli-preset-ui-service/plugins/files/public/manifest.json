@@ -1,0 +1,6 @@
+{
+  "name": "UI Service",
+  "short_name": "UI Service",
+  "description": "Prototype to demonstrate capabilities of the UI Service for the UI SDK.",
+  "display": "standalone"
+}

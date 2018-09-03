@@ -10,6 +10,8 @@ const { createClient, getPackageInfoFrom } = require('@carbon/npm');
 const invariant = require('invariant');
 const { create } = require('./project');
 
+function noop() {}
+
 async function add(api, env, descriptors, cmd) {
   const { cwd, npmClient: npmClientName } = env;
   const packages = descriptors.map(getPackageInfoFrom);
@@ -115,15 +117,7 @@ async function add(api, env, descriptors, cmd) {
       throw loadPresetError;
     }
 
-    await addPlugins(
-      presetPlugins,
-      config,
-      installer,
-      npmClient,
-      api,
-      cmd,
-      env
-    );
+    await addPlugins(presetPlugins, config, noop, npmClient, api, cmd, env);
   }
 
   if (Array.isArray(plugins) && plugins.length > 0) {
