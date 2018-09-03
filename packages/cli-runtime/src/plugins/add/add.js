@@ -26,7 +26,6 @@ async function add(api, env, descriptors, cmd) {
     throw error;
   }
 
-  // const { error: loadConfigError, config } = await loadConfig({ cwd: env.cwd });
   const { error: loadConfigError, config } = await Config.load({
     name: 'toolkit',
     cwd: env.cwd,
@@ -111,6 +110,7 @@ async function add(api, env, descriptors, cmd) {
       name,
       relativeLoader(env.cwd)
     );
+
     if (loadPresetError) {
       throw loadPresetError;
     }

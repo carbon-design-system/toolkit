@@ -4,12 +4,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "toolkit test",
     "toolkit": "../../packages/toolkit/bin/index.js"
   },
   "toolkit": {
-    "presets": [
-      "@carbon/cli-preset-test"
-    ]
+    "presets": []
   }
 }
