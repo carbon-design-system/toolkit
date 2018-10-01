@@ -1,5 +1,36 @@
 'use strict';
 
+/**
+ * Describes a plugin or preset. Contains a string for the name of the plugin or
+ * preset, or a [string, Object] tuple where the first element is the name and
+ * the second element is the options for the plugin or preset.
+ * @typedef {(string|[string, Object])} Descriptor
+ */
+
+/**
+ * A collection of preset and plugin descriptors to try and load.
+ * @typedef Config
+ * @property {Descriptor[]} presets
+ * @property {Descriptor[]} plugins
+ */
+
+/**
+ * @typdef LoadedModule
+ * @property {?Error} error - an error occurred while loading the module
+ * @property {?Function} module - the loaded module
+ */
+
+/**
+ * @typedef Loader
+ * @param {string} name - the name of the module to load
+ * @returns {LoadedModule}
+ */
+
+/**
+ * Load the given configuration using the given loader.
+ * @param {Config} config - the configuration to load
+ * @param {Loader} loader - a loader to load plugins or presets by name
+ */
 function loadConfig(config, loader) {
   const { presets, plugins } = config;
   return {
@@ -8,6 +39,11 @@ function loadConfig(config, loader) {
   };
 }
 
+/**
+ * Load the plugin descriptor with the given loader
+ * @param {Descriptor} descriptor
+ * @param {Loader} loader
+ */
 function loadPlugin(descriptor, loader) {
   const config = Array.isArray(descriptor) ? descriptor : [descriptor];
   const [name, options = {}] = config;
@@ -37,6 +73,11 @@ function loadPlugin(descriptor, loader) {
   };
 }
 
+/**
+ * Load the preset with the given loader
+ * @param {Descriptor} descriptor
+ * @param {Loader} loader
+ */
 function loadPreset(descriptor, loader) {
   const config = Array.isArray(descriptor) ? descriptor : [descriptor];
   const [name, options = {}] = config;
