@@ -6,38 +6,30 @@
 
 const { createFsFromVolume, Volume } = require('memfs');
 
-// eslint-disable-next-line no-console
-const originalConsoleLog = console.log;
-
 xdescribe('create plugin', () => {
+  let mockApi;
   let mockName;
-  let mockCmd;
+  let mockOptions;
   let mockEnv;
   let mockVol;
   let mockFs;
 
   let fs;
+  let npmClient;
   let create;
 
   beforeEach(() => {
     jest.resetModules();
 
+    mockApi = {};
     mockName = 'foo';
-    mockCmd = {
+    mockOptions = {
       link: false,
       linkCli: false,
     };
     mockEnv = {
       cwd: '/',
       npmClient: 'npm',
-      spinner: {
-        start: jest.fn(),
-        stop: jest.fn(),
-        succeed: jest.fn(),
-        fail: jest.fn(),
-        warn: jest.fn(),
-        info: jest.fn(),
-      },
     };
 
     mockVol = Volume.fromJSON({
@@ -45,35 +37,32 @@ xdescribe('create plugin', () => {
     });
     mockFs = createFsFromVolume(mockVol);
 
+    jest.mock('@carbon/npm');
     jest.mock('fs', () => mockFs);
 
     fs = require('fs-extra');
+    npmClient = require('@carbon/npm').createClient.mock;
     create = require('../create');
-
-    // eslint-disable-next-line no-console
-    console.log = jest.fn();
-  });
-
-  afterEach(() => {
-    // eslint-disable-next-line no-console
-    console.log = originalConsoleLog;
   });
 
   it('should warn if a folder already exists for the project name', () => {
-    expect(create('exists', mockCmd, mockEnv)).rejects.toThrow();
+    expect(create('exists', mockOptions, mockApi, mockEnv)).rejects.toThrow(
+      'A folder already exists at `/exists`'
+    );
   });
 
-  it('should create a folder to make the project in', async () => {
-    await create(mockName, mockCmd, mockEnv);
+  it('should create a folder and package.json when starting a project', async () => {
+    await create(mockName, mockOptions, mockApi, mockEnv);
+    // Check for folder
     expect(await fs.exists(`/${mockName}`)).toBe(true);
-  });
-
-  it('should initialize the project with a `package.json` file', async () => {
-    await create(mockName, mockCmd, mockEnv);
+    // Check for package.json
     expect(await fs.exists(`/${mockName}/package.json`)).toBe(true);
   });
 
-  // Plugins arg in CLI
-  // NO plugins from inquirer
-  // plugins from inquirer
+  it('should install toolkit as a dependency', async () => {
+    await create(mockName, mockOptions, mockApi, mockEnv);
+    expect(npmClient.installDependencies).toHaveBeenCalledWith([
+      '@carbon/toolkit',
+    ]);
+  });
 });

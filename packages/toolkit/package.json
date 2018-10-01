@@ -11,6 +11,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@carbon/cli-reporter": "0.0.23",
     "@carbon/cli-runtime": "0.0.23",
     "@carbon/cli-tools": "0.0.23",
     "chalk": "^2.4.1",
