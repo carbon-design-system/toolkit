@@ -14,7 +14,7 @@ function stringify(object) {
   return JSON.stringify(object, null, 2);
 }
 
-describe('init', () => {
+xdescribe('init', () => {
   let mockVol;
   let mockFs;
   let mockCommands;

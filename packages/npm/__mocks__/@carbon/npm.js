@@ -20,9 +20,9 @@ const createClient = jest.fn((npmClient, cwd) => {
   const installDevDependencies = jest.fn();
   const linkDependencies = jest.fn();
 
-  createClient.mock.installDependencies.push(installDependencies);
-  createClient.mock.installDevDependencies.push(installDevDependencies);
-  createClient.mock.linkDependencies.push(linkDependencies);
+  createClient.mock.installDependencies = installDependencies;
+  createClient.mock.installDevDependencies = installDevDependencies;
+  createClient.mock.linkDependencies = linkDependencies;
 
   return {
     installDependencies,
@@ -32,10 +32,6 @@ const createClient = jest.fn((npmClient, cwd) => {
     writePackageJson,
   };
 });
-
-createClient.mock.installDependencies = [];
-createClient.mock.installDevDependencies = [];
-createClient.mock.linkDependencies = [];
 
 const getClient = jest.fn(() => Promise.resolve('npm'));
 getClient.sync = () => 'npm';

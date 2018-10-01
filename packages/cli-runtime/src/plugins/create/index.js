@@ -20,6 +20,11 @@ module.exports = ({ api, env }) => {
         defaults: list,
       },
       {
+        flags: '--presets [presets...]',
+        description: 'Specify a list of presets to add',
+        defaults: list,
+      },
+      {
         flags: '--npm-client [client]',
         description: 'specify an npm client to use [npm, yarn]',
         defaults: getClient.sync(env.cwd),
@@ -33,6 +38,10 @@ module.exports = ({ api, env }) => {
         flags: '--link-cli',
         description: 'link cli for local development',
         development: true,
+      },
+      {
+        flags: '--skip',
+        description: 'skip any installation prompts',
       },
     ],
     action(name, cmd) {

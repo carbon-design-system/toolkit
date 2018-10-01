@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@carbon/cli-config": "0.0.23",
+    "@carbon/cli-reporter": "0.0.23",
     "@carbon/cli-tools": "0.0.23",
     "@carbon/npm": "0.0.23",
     "fs-extra": "^7.0.0",
