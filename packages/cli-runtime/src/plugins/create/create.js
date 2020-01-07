@@ -18,13 +18,11 @@ const which = util.promisify(npmWhich);
  * Create a toolkit project with the given name and options.
  */
 async function create(name, options, api, env) {
-  // Grab the cwd and npmClient off of the environment. We can use these to
-  // create the folder for the project and for determining what client to use
-  // for npm-related commands
-  const { CLI_ENV, cwd, npmClient } = env;
+  const { CLI_ENV, cwd } = env;
   // We support a couple of options for our `create` command, some only exist
   // during development (like link and linkCli).
-  const { link, linkCli, plugins = [], presets = [], skip } = options;
+  const { link, linkCli, npmClient, plugins = [], presets = [], skip } = options;
+
   const root = path.join(cwd, name);
 
   logger.trace('Creating project:', name, 'at:', root);
