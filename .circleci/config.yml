@@ -27,7 +27,7 @@ jobs:
           command: yarn ci-check
 
       - setup_remote_docker:
-          docker_layer_caching: true
+          docker_layer_caching: false
 
       - run:
           name: Run end-to-end tests
