@@ -41,12 +41,15 @@
   "toolkit": {
     "plugins": [
       "@carbon/cli-plugin-prettier",
-      ["@carbon/cli-plugin-jest", {
-        "testPathIgnorePatterns": [
-          "<rootDir>/packages/babel-preset-toolkit/",
-          "<rootDir>/test/"
-        ]
-      }]
+      [
+        "@carbon/cli-plugin-jest",
+        {
+          "testPathIgnorePatterns": [
+            "<rootDir>/packages/babel-preset-toolkit/",
+            "<rootDir>/test/"
+          ]
+        }
+      ]
     ]
   },
   "commitlint": {
@@ -66,7 +69,9 @@
     ]
   },
   "eslintConfig": {
-    "extends": ["./packages/eslint-config-toolkit/index.js"]
+    "extends": [
+      "./packages/eslint-config-toolkit/index.js"
+    ]
   },
   "prettier": {
     "jsxBracketSameLine": true,
