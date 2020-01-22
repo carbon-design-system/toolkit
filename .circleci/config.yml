@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/node:8.11
     working_directory: ~/repo
@@ -35,3 +35,40 @@ jobs:
             docker-compose -f e2e/docker-compose.yml build
             docker-compose -f e2e/docker-compose.yml run test
             docker-compose -f e2e/docker-compose.yml down -v
+
+  publish:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+
+      - run: yarn install --offline
+
+      - run:
+          name: Set NPM token
+          command: |
+            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+
+      - run:
+          name: Publish new packages with Lerna
+          command: |
+            lerna publish patch --yes
+
+workflows:
+  version: 2
+  test_and_publish:
+    jobs:
+      - test
+      - publish:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
