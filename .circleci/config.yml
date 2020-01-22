@@ -45,8 +45,8 @@ jobs:
       - checkout
 
       - restore_cache:
-        keys:
-        - v1-dependencies-{{ checksum "package.json" }}
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
 
       - run: yarn install --offline
 
