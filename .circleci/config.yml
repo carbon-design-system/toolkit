@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Publish new packages with Lerna
           command: |
-            lerna publish --conventional-commits --yes
+            lerna publish patch --yes
 
 workflows:
   version: 2
