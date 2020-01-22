@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Publish new packages with Lerna
           command: |
-            lerna publish patch --yes
+            yarn lerna publish patch --yes
 
 workflows:
   version: 2
