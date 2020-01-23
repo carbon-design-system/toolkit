@@ -56,6 +56,12 @@ jobs:
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
 
       - run:
+          name: Configure Git identity
+          command: |
+            git config user.email "ryan.o.mackey@gmail.com"
+            git config user.name "Ryan O. Mackey"
+
+      - run:
           name: Publish new packages with Lerna
           command: |
             yarn lerna version patch --yes
