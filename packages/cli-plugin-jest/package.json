@@ -1,6 +1,6 @@
 {
   "name": "@carbon/cli-plugin-jest",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-plugin-jest",
@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.0.0-rc.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.0",
-    "babel-preset-toolkit": "0.0.23",
+    "babel-preset-toolkit": "^0.0.24",
     "jest": "^23.4.1",
     "lodash.mergewith": "^4.6.1",
     "object-assign": "^4.1.1",

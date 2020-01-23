@@ -1,6 +1,6 @@
 {
   "name": "@carbon/cli-preset-carbon-addon",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/cli-preset-carbon-addon",
@@ -9,11 +9,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/cli-plugin-babel": "0.0.23",
-    "@carbon/cli-plugin-editorconfig": "0.0.23",
-    "@carbon/cli-plugin-github-files": "0.0.23",
-    "@carbon/cli-plugin-jest": "0.0.23",
-    "@carbon/cli-plugin-prettier": "0.0.23",
-    "@carbon/cli-plugin-stylelint": "0.0.23"
+    "@carbon/cli-plugin-babel": "^0.0.24",
+    "@carbon/cli-plugin-editorconfig": "^0.0.24",
+    "@carbon/cli-plugin-github-files": "^0.0.24",
+    "@carbon/cli-plugin-jest": "^0.0.24",
+    "@carbon/cli-plugin-prettier": "^0.0.24",
+    "@carbon/cli-plugin-stylelint": "^0.0.24"
   }
 }

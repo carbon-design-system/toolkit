@@ -1,6 +1,6 @@
 {
   "name": "@carbon/server",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/server",
   "bugs": "https://github.com/carbon-design-system/toolkit/issues",
@@ -8,7 +8,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/cli-runtime": "0.0.23",
+    "@carbon/cli-runtime": "^0.0.24",
     "body-parser": "^1.17.2",
     "compression": "^1.7.0",
     "config": "^1.26.2",

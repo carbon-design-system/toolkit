@@ -1,6 +1,6 @@
 {
   "name": "@carbon/npm",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "main": "src/index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/npm",
@@ -9,7 +9,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/cli-tools": "0.0.23",
+    "@carbon/cli-tools": "^0.0.24",
     "fs-extra": "^7.0.0"
   },
   "devDependencies": {

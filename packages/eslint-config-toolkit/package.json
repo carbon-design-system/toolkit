@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-toolkit",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/eslint-config-toolkit",
@@ -12,6 +12,6 @@
     "eslint": "^5.3.0"
   },
   "dependencies": {
-    "eslint-config-toolkit-base": "0.0.23"
+    "eslint-config-toolkit-base": "^0.0.24"
   }
 }

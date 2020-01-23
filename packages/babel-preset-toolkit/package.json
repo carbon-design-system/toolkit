@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-toolkit",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/toolkit/tree/master/packages/babel-preset-toolkit",
@@ -24,6 +24,6 @@
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "browserslist-config-toolkit": "0.0.23"
+    "browserslist-config-toolkit": "^0.0.24"
   }
 }
